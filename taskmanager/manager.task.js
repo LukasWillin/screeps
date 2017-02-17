@@ -16,6 +16,7 @@ var manager_task = {
     manageTasks: function(){
         var structureModule = require('manager.task.structure');
         var roomModule = require('manager.task.room');
+        
 
         // let structures and creeps create tasks
         for(var structureName in Game.structures) {

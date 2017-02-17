@@ -42,7 +42,7 @@ var role_creep = {
                 delete creepObject.memory.taskInfo;
             }
         } else {
-            if(creepObject.ticksToLive % 4 === 0) {
+            if(creepObject.ticksToLive % 3 === 0) {
 
                 creepObject.memory.task = manager_task.getTaskByBody(creepObject.body);
                 creepObject.memory.taskInfo = {};

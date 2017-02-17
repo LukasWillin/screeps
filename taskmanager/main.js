@@ -9,12 +9,14 @@ var taskCreationCycle = 15;
 
 module.exports.loop = function () {
     
+    console.log("Next task creation cycle in ".concat(Math.abs((Game.time % taskCreationCycle ) - taskCreationCycle)));
     manager_task.registerTick(); if(Game.time % taskCreationCycle === 0) { manager_task.run(); }
     
     manager_path.logPositions();
     //Game.creeps['Worker1'].memory['task'] = 'taskHarvest_1263';
     //console.log(Game.creeps['Worker1'].memory);
     
+   
     for(var creepName in Game.creeps) {
         var creep = Game.creeps[creepName];
         

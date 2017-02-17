@@ -22,26 +22,28 @@ module.exports = {
             sourceList = _.sortBy(sourceList, function(obj) {
                 return Math.abs(structure.pos.x - obj.pos.x) + Math.abs(structure.pos.y - obj.pos.y);
             });
-            
-            for(var i = 0; i < sourceList.length && (creep.memory.taskInfo.subTasks.harvest.sourceId === undefined); i++) {
-                var freePos = 0; var source = sourceList[i];
-                
-                // Check if enough miningSpots are avalable
-                for(var xi = source.pos.x - 1; xi <= source.pos.x + 1 && freePos < 2; xi++) {
-                    for(var yi = source.pos.y - 1; yi <= source.pos.y + 1 && freePos < 2; yi++) {
-                        var posObjArr; var posObj;
-                        if(xi >= 0 && xi < 50 && yi >= 0 && yi < 50) {
-			                posObjArr = structure.room.lookAt(xi, yi);
-			                //console.log(JSON.stringify(posObjArr));
-                			posObj = posObjArr[0]; //posObjArray.length-1];
-                		}
-                		if( posObj && posObj['type'] == 'terrain' && !(posObj['terrain'] == 'wall') ) freePos++;
+            for (var j = 3; j >= 0 && (creep.memory.taskInfo.subTasks.harvest.sourceId === undefined); j--) {
+                for(var i = 0; i < sourceList.length && (creep.memory.taskInfo.subTasks.harvest.sourceId === undefined); i++) {
+                    var freePos = 0; var source = sourceList[i];
+                    
+                    // Check if enough miningSpots are avalable
+                    for(var xi = source.pos.x - 1; xi <= source.pos.x + 1 && freePos < 2; xi++) {
+                        for(var yi = source.pos.y - 1; yi <= source.pos.y + 1 && freePos < 2; yi++) {
+                            var posObjArr; var posObj;
+                            if(xi >= 0 && xi < 50 && yi >= 0 && yi < 50) {
+    			                posObjArr = structure.room.lookAt(xi, yi);
+    			                //console.log(JSON.stringify(posObjArr));
+                    			posObj = posObjArr[0]; //posObjArray.length-1];
+                    		}
+                    		if( posObj && posObj['type'] == 'terrain' && !(posObj['terrain'] == 'wall') ) freePos++;
+                        }
                     }
+                    
+                    // TODO remove the 0 place requirement to 2
+                    if(freePos >= j && source !== undefined) creep.memory.taskInfo.subTasks.harvest.sourceId = source.id;
                 }
-                
-                // TODO remove the 0 place requirement to 2
-                if(freePos >= 2 && source !== undefined) creep.memory.taskInfo.subTasks.harvest.sourceId = source.id;
             }
+            
         }
         
 	    if(creep.carry.energy < creep.carryCapacity) {
@@ -52,6 +54,7 @@ module.exports = {
             
         } else {
             taskObj = undefined;
+            delete creepObject.memory.taskInfo.subTasks.harvest.sourceId;
         }
         
         return taskObject;

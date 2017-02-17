@@ -18,10 +18,9 @@ module.exports = {
             this.check_Controller_ForTasks(structure);
             
         } else if (structure.structureType === STRUCTURE_EXTENSION) {
-            
             this.check_Extension_ForTasks(structure);
         } else if (structure.structureType === STRUCTURE_TOWER) {
-            
+            this.check_Tower_ForTasks(structure);
         }
     },
     
@@ -43,7 +42,7 @@ module.exports = {
             if(Object.keys(Game.creeps).length === 0) {
                 
             }
-            if( (5 - Object.keys(Game.creeps).length) > 0) {
+            if( (8 - Object.keys(Game.creeps).length) > 0) {
                 var role_creepModule = require('role.creep');
                 var creepName = Game.spawns[Object.keys(Game.spawns)[0]].createCreep(role_creepModule.WORKER_CLASS.LVL_1);
                 for(var spawningCreep in Game.spawns) {
@@ -85,7 +84,7 @@ module.exports = {
         }
     },
     
-    check_Tower_ForTasks(structure) {
+    check_Tower_ForTasks: function(structure) {
         if(structure.energy < structure.energyCapacity) {
             this.createReplenishEnergyTask(structure);
         }

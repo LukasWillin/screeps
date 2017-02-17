@@ -13,31 +13,36 @@ module.exports = {
     */
     run: function(creepObject, taskObject) {
         
-	    if(creepObject.carry.energy < creepObject.carryCapacity) {
-	        
-	        if(taskObject.sourceId === undefined) {
-	            //var structure = Game.getObjectById(taskObject.targetId);
-	            //taskObject.sourceId = structure.room.find(FIND_SOURCES)[0].id;
-	        }
-	        var taskHarvestMod = require('task.source.harvest');
-	        var taskHarvest = taskHarvestMod.run(creepObject, taskObject.subTasks.harvest);
-	        
-            //var source = Game.getObjectById(taskObject.sourceId);
-            //if(creepObject.harvest(source) === ERR_NOT_IN_RANGE) {
-            //    creepObject.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
-            //}
-            
+        var target = Game.getObjectById(taskObject.targetId);
+        if(target.energy === target.energyCapacity) {
+            taskObject = undefined;
         } else {
-            delete creepObject.memory.taskInfo.subTasks.harvest.sourceId;
-            
-            var target = Game.getObjectById(taskObject.targetId);
-            
-            if(creepObject.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                creepObject.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+            if(creepObject.carry.energy < creepObject.carryCapacity) {
+	        
+    	        //if(taskObject.sourceId === undefined) {
+    	            //var structure = Game.getObjectById(taskObject.targetId);
+    	            //taskObject.sourceId = structure.room.find(FIND_SOURCES)[0].id;
+    	        //}
+    	        var taskHarvestMod = require('task.source.harvest');
+    	        var taskHarvest = taskHarvestMod.run(creepObject, taskObject.subTasks.harvest);
+    	        
+                //var source = Game.getObjectById(taskObject.sourceId);
+                //if(creepObject.harvest(source) === ERR_NOT_IN_RANGE) {
+                //    creepObject.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
+                //}
+                
             } else {
-                creepObject.memory.taskInfo.subTasks.harvest.sourceId = undefined;
-                if(target.energy == target.energyCapacity) {
-                    taskObject = undefined;
+                //delete creepObject.memory.taskInfo.subTasks.harvest.sourceId;
+                
+                
+                
+                if(creepObject.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                    creepObject.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                } else {
+                    creepObject.memory.taskInfo.subTasks.harvest.sourceId = undefined;
+                    if(target.energy == target.energyCapacity) {
+                        taskObject = undefined;
+                    }
                 }
             }
         }
@@ -62,7 +67,7 @@ module.exports = {
 	    this.targetId = targetId;
 	    this.progressPercentage = progressPercentage;
 	    this.urgencyLvl = urgencyLvl;
-	    this.factor = 1.5;
+	    this.factor = 0.6;
 	    
 	    this.requiredBodyParts = [WORK, MOVE, CARRY];
 	},
