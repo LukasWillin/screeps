@@ -26,22 +26,24 @@ module.exports = {
         if(Memory.posList[roomName][x][y].count === undefined) Memory.posList[roomName][x][y].count = 0;
         
         Memory.posList[roomName][x][y].count = Memory.posList[roomName][x][y].count + 1;
-        
-        var dest = creep.memory._move.dest;
-        
-        if(Memory.posList[roomName][x][y].dests === undefined)
-            Memory.posList[roomName][x][y].dests = {};
-        if(Memory.posList[roomName][x][y].dests[dest.room] === undefined)
-            Memory.posList[roomName][x][y].dests[dest.room] = {};
-        if(Memory.posList[roomName][x][y].dests[dest.room][dest.x] === undefined)
-            Memory.posList[roomName][x][y].dests[dest.room][dest.x] = {};
-        if(Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y] === undefined)
-            Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y] = {};
-        if(Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y].count === undefined)
-            Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y].count = 0;
-            
-        Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y].count += 1;
-
+        var dest
+        if(creep.memory._move) {
+            if(creep.memory._move.dest) {
+                dest = creep.memory._move.dest;
+                if(Memory.posList[roomName][x][y].dests === undefined)
+                    Memory.posList[roomName][x][y].dests = {};
+                if(Memory.posList[roomName][x][y].dests[dest.room] === undefined)
+                    Memory.posList[roomName][x][y].dests[dest.room] = {};
+                if(Memory.posList[roomName][x][y].dests[dest.room][dest.x] === undefined)
+                    Memory.posList[roomName][x][y].dests[dest.room][dest.x] = {};
+                if(Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y] === undefined)
+                    Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y] = {};
+                if(Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y].count === undefined)
+                    Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y].count = 0;
+                    
+                Memory.posList[roomName][x][y].dests[dest.room][dest.x][dest.y].count += 1;
+            }
+        }
     },
     
     calcPathsFromLoggedPositions() {
