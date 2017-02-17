@@ -81,10 +81,10 @@ var manager_task = {
             var currUrgencyLvl = this.calcTaskUrgencyLvl(taskName);
 
             if(currUrgencyLvl > lastHighestUrgencyLvl) {
-                lastHighestUrgencyLvl = currUrgencyLvl;
                 var task = taskList[taskName];
                 
                 var i = 0; while( bodySuitedForTask && i < task.requiredBodyParts.length ) {
+                    lastHighestUrgencyLvl = currUrgencyLvl;
                     bodySuitedForTask = ( _.indexOf(abilities, task.requiredBodyParts[i]) != -1 ); 
                     i++;
                 }

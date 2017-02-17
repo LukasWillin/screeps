@@ -9,11 +9,30 @@
 
 module.exports = {
     
-    cachedMoveTo(creep, fromX, fromY, toX, toY) {
-        var 
+    cachedMoveTo: function(creep, fromX, fromY, toX, toY) {
+        
     },
     
-    cachedMoveTo(creep, from, to) {
+    cachedMoveTo: function(creep, from, to) {
+        
+    },
+    
+     cachedMoveTo: function(creep, toX, toY) {
+        
+    },
+    
+    cachedMoveTo: function(creep, to) {
+        if (creep.lastPos === undefined)
+            creep.lastPos = {};
+        if (creep.lastPos.x == undefined) 
+            creep.lastPos.x = creep.pos.x;
+        if (creep.lastPos.y == undefined) 
+            creep.lastPos.y = creep.pos.y;
+        
+        
+    },
+    
+    moveOnMostUsed: function(creep, fromX, fromY, toX, toY) {
         
     },
     

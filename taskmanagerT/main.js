@@ -9,7 +9,7 @@ var taskCreationCycle = 15;
 
 module.exports.loop = function () {
     
-    console.log("Next task creation cycle in ".concat(Math.abs((Game.time % taskCreationCycle ) - taskCreationCycle)));
+    //console.log("Next task creation cycle in ".concat(Math.abs((Game.time % taskCreationCycle ) - taskCreationCycle)));
     manager_task.registerTick(); if(Game.time % taskCreationCycle === 0) { manager_task.run(); }
     
     manager_path.logPositions();
