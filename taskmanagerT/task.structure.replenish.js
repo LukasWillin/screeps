@@ -37,7 +37,9 @@ module.exports = {
                 
                 
                 if(creepObject.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                    creepObject.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                    var wrapper_creep = require('wrapper.creep');
+                    wrapper_creep.cachedMoveTo(creepObject, target);
+                    //creepObject.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                 } else {
                     creepObject.memory.taskInfo.subTasks.harvest.sourceId = undefined;
                     if(target.energy == target.energyCapacity) {

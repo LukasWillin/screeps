@@ -52,7 +52,9 @@ module.exports = {
 	    if(creep.carry.energy < creep.carryCapacity) {
             var source = Game.getObjectById(creep.memory.taskInfo.subTasks.harvest.sourceId);
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
+                var wrapper_creep = require('wrapper.creep');
+                wrapper_creep.cachedMoveTo(creep, source);
+                //creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
             }
             
         } else {

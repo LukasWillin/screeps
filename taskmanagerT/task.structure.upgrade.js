@@ -40,7 +40,9 @@ module.exports = {
 	        //delete creep.memory.taskInfo.subTasks.harvest.sourceId;
 	        
             if(creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
+                var wrapper_creep = require('wrapper.creep');
+                wrapper_creep.cachedMoveTo(creep, creep.room.controller);
+                //creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
             } else {
                 taskObject.progressPercentage = taskObject.progressPercentage + 0.5;
             }
