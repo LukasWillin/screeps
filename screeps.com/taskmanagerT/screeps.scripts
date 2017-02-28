@@ -1,0 +1,52 @@
+<NotepadPlus>
+    <Project name="Screeps">
+        <Folder name="taskmanagerT">
+            <File name="action.js" />
+            <File name="action.spawn.js" />
+            <File name="action.spawn.spawn.js" />
+            <File name="extension.controller.js" />
+            <File name="extension.creep.js" />
+            <File name="extension.js" />
+            <File name="main.js" />
+            <File name="manager.action.js" />
+            <File name="manager.creep.js" />
+            <File name="manager.js" />
+            <File name="manager.logistic.js" />
+            <File name="manager.object.js" />
+            <File name="manager.path.js" />
+            <File name="manager.room.pos.rating.js" />
+            <File name="manager.structure.civil.js" />
+            <File name="manager.structure.js" />
+            <File name="manager.structure.military.js" />
+            <File name="manager.task.js" />
+            <File name="manager.task.room.js" />
+            <File name="manager.task.structure.js" />
+            <File name="object.battalion.js" />
+            <File name="object.company.js" />
+            <File name="object.js" />
+            <File name="role.creep.js" />
+            <File name="role.js" />
+            <File name="role.tower.js" />
+            <File name="screeps.scripts" />
+            <File name="system.cpu.js" />
+            <File name="system.js" />
+            <File name="task.js" />
+            <File name="task.military.attack.js" />
+            <File name="task.military.convoy.js" />
+            <File name="task.military.defend.js" />
+            <File name="task.military.guard.js" />
+            <File name="task.military.js" />
+            <File name="task.military.support.convoy.js" />
+            <File name="task.military.support.js" />
+            <File name="task.source.js" />
+            <File name="task.source.move.js" />
+            <File name="task.structure.build.js" />
+            <File name="task.structure.js" />
+            <File name="task.structure.repair.js" />
+            <File name="task.structure.replenish.js" />
+            <File name="task.structure.upgrade.js" />
+            <File name="utils.js" />
+            <File name="utils.memory.js" />
+        </Folder>
+    </Project>
+</NotepadPlus>
