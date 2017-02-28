@@ -2,6 +2,8 @@ var manager_task = require('manager.task');
 var role_tower = require('role.tower');
 var mngr_object = require('manager.object');
 
+// test message for git sync
+
 var taskCreationCycle = 15;
 
 module.exports.loop = function () {
