@@ -10,11 +10,11 @@ module.exports = {
         //and should be run directly by a function from the object to minimize overhead
     },
 	
-	createObject: function(urgencyLvl, body, type, lvl, companyId, battalionId, requiredEnergy) {
-	    return new this.object(this.NAME_BASE, this.MODULE, urgencyLvl, room, body, type, lvl, companyId, battalionId, requiredEnergy);
+	create: function(urgencyLvl, body, type, lvl, companyId, battalionId, requiredEnergy) {
+	    return new this._object(this.NAME_BASE, this.MODULE, urgencyLvl, room, body, type, lvl, companyId, battalionId, requiredEnergy);
 	},
 	
-	object: function(nameBase, module, urgencyLvl, room, body, type, lvl, companyId, battalionId, requiredEnergy) {
+	_object: function(nameBase, module, urgencyLvl, room, body, type, lvl, companyId, battalionId, requiredEnergy) {
 	        this.nameBase = nameBase;
 	        this.module = module;
 	        this.room = room;
@@ -30,6 +30,7 @@ module.exports = {
 	        this.companyId = companyId;
 	        this.battalionId = battalionId;
 	        this.requiredEnergy = requiredEnergy;
+	        this.controller = null; //must be set after creation
 	},
 	
 	NAME_BASE: 'actionSpawn',

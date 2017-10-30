@@ -1,21 +1,22 @@
-var manager_task = require('manager.task');
-var role_tower = require('role.tower');
-var mngr_object = require('manager.object');
+//var manager_task = require('manager.task');
+var util_task = require('util.task');
+var obj_tower = require('object.tower');
+var util_object = require('util.object');
 
 var taskCreationCycle = 15;
 
 module.exports.loop = function () {
     
-    manager_task.registerTick();
-	if(Game.time % taskCreationCycle === 0) { manager_task.run(); }
+    util_task.registerTick();
 	
-    var controllers = mngr_object.getExtendedControllers();
+	//if(Game.time % taskCreationCycle === 0) { manager_task.run(); }
+	
+    var controllers = util_object.getExtendedStructuresByType(STRUCTURE_CONTROLLER);
     for(var controller in controllers) { controller = controllers[controller];
-        //ext_controller.extend(controller);
         controller.run();
     }
     
-    role_tower.run(Game.getObjectById('58a68d4d5ef060f3422d875e'));
+    obj_tower.run(Game.getObjectById('58a68d4d5ef060f3422d875e'));
 }
 
 

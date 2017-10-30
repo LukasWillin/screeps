@@ -3,11 +3,11 @@
  * module.exports.thing = 'a thing';
  *
  * You can import it from another modules like this:
- * var mod = require('role.creep');
+ * var mod = require('object.creep');
  * mod.thing == 'a thing'; // true
  */
  
-var manager_task = require('manager.task');
+var util_task = require('util.task');
 var ext_creep = require('extension.creep');
  
 var role_creep = {
@@ -21,11 +21,11 @@ var role_creep = {
         
         
         if(creepObject.memory.task) {
-            var task = manager_task.getTaskByName(creepObject.memory.task);
+            var task = util_task.getTaskByName(creepObject.memory.task);
             if(task) {
                 
                 task = this.doTask(creepObject, task);
-                manager_task.setTask(task, creepObject.memory.task);
+                util_task.setSharedTask(task, creepObject.memory.task);
             } else {
                 creepObject.memory.task = undefined;
                 delete creepObject.memory.taskInfo;
@@ -33,7 +33,7 @@ var role_creep = {
         } else {
             if(creepObject.ticksToLive % 3 === 0) {
 
-                creepObject.memory.task = manager_task.getTaskByBody(creepObject.body);
+                creepObject.memory.task = util_task.getTaskByBody(creepObject.body);
                 creepObject.memory.taskInfo = {};
             }
         }

@@ -1,52 +1,29 @@
+/*
+ * Module code goes here. Use 'module.exports' to export things:
+ * module.exports.thing = 'a thing';
+ *
+ * You can import it from another modules like this:
+ * var mod = require('util.memory.task');
+ * mod.thing == 'a thing'; // true
+ */
 
-var manager_task = {
-    /**
-     * Creates tasks on it own
-     * Deletes done tasks
-     * Marks due tasks as urgent
-     * Gives idle creeps tasks
-     * Forces Creeps to do urgent tasks
-     * Takes tasks requested from creeps
-    */
-    run: function() {
-        
-        this.manageTasks();
-        //console.log("Task creation");
-    },
-    
-    manageTasks: function(){
-        var structureModule = require('manager.task.structure');
-        var roomModule = require('manager.task.room');
-        
-
-        // let structures and creeps create tasks
-        for(var structureName in Game.structures) {
-            structureModule.checkForTasks(Game.structures[structureName]);
-        }
-        for(var roomName in Game.rooms) {
-            roomModule.checkForTasks(roomName);
-        }
-    },
+module.exports = {
     
     /** @param {taskObject} taskObject **/
-    setTask: function(taskObject, taskName) {
+    setSharedTask: function(taskObject, taskName) {
         if(!taskName && taskObject) {
             taskName = taskObject.nameBase + '_' + this.getNewTaskId(); //create a new unique task name
             
-            var taskList = this.getTaskList();
-            taskList[taskName] = taskObject;
-            this.setTaskList(taskList); //save new task list in memory
+            this.generalTaskList[taskName] = taskObject;
 
             //console.log('Set new task < ' + taskName + ' > created by < '+ taskObject.creatorId + ' >');
         } else {
             if(!taskObject) {
                 
-                this.deleteTask(taskName);
+                this._deleteTask(taskName);
             } else {
-                var taskList = this.getTaskList();
-                taskList[taskName] = taskObject;
-                this.setTaskList(taskList); //save new task list in memory
-    
+                this.generalTaskList[taskName] = taskObject;
+
                 //console.log('Saved updated Task < ' + taskName + ' > created by < '+ taskObject.creatorId + ' >');
             }
         }
@@ -54,16 +31,9 @@ var manager_task = {
         return taskName;
     },
     
-    deleteTask: function(taskName) {
-        console.log('Deleting task < ' + taskName + ' >');
-        var taskList = this.getTaskList();
-        delete taskList[taskName];
-        this.setTaskList(taskList);
-    },
-    
     /** Get a task by task name **/
     getTaskByName: function(taskName) {
-        return this.getTaskList()[taskName];
+        return this.generalTaskList[taskName];
     },
     
     getTaskByBody: function(body){
@@ -73,16 +43,15 @@ var manager_task = {
 
         var mostUrgentTask_Name;
         var lastHighestUrgencyLvl = -1000;
-        var taskList = this.getTaskList();
         
-        for(var taskName in taskList) {
+        for(var taskName in this.generalTaskList) {
             var bodySuitedForTask = true; // check if assumption is false
             
             
             var currUrgencyLvl = this.calcTaskUrgencyLvl(taskName);
 
             if(currUrgencyLvl > lastHighestUrgencyLvl) {
-                var task = taskList[taskName];
+                var task = this.generalTaskList[taskName];
                 
                 var i = 0; while( bodySuitedForTask && i < task.requiredBodyParts.length ) {
                     lastHighestUrgencyLvl = currUrgencyLvl;
@@ -97,10 +66,6 @@ var manager_task = {
             if (bodySuitedForTask) { mostUrgentTask_Name = taskName; }
         }
         return mostUrgentTask_Name;
-    },
-    
-    setTaskList: function(taskList) {
-        Memory['taskList'] = taskList;
     },
     
     /**
@@ -122,7 +87,7 @@ var manager_task = {
      * Returns a list of tasks by this creatorId and name base of task
      */
     getExistingTasks: function(creatorId, taskNameBase) {
-        var taskList = this.getTaskList();
+        var taskList = this.generalTaskList;
         taskList = _.pick(taskList, function(value, key, object) {
             return (value.creatorId === creatorId && value.nameBase === taskNameBase);
         });
@@ -133,48 +98,29 @@ var manager_task = {
     },
     
     getExistingTaskName: function(creatorId, taskNameBase, targetId){
-        var taskList = this.getTaskList();
-        var taskKey = _.findKey(taskList, function(task){
+        var taskKey = _.findKey(this.generalTaskList, function(task){
             return (task.creatorId === creatorId && task.nameBase === taskNameBase && task.targetId === targetId);
         });
         return taskKey;
     },
     
-    /** Returns the task list as object **/
-    getTaskList: function() {
+    generalTaskList: function(){
         var taskList = Memory['taskList'];
         if(!taskList) {
             taskList = {};
+            Memory.taskList = taskList;
         }
         return taskList;
-    },
-    
-    /*getUniqueParts: function(a) {
-        var seen = {};
-        var out = [];
-        var len = a.length;
-        var j = 0;
-        for(var i = 0; i < len; i++) {
-             var item = a[i];
-             if(seen[item] !== 1) {
-                   seen[item] = 1;
-               out[j++] = item;
-             }
-        }
-        return out;
-    },*/
+    }(),
     
     registerTick: function() {
-        var taskList = this.getTaskList();
-        for(var key in taskList) {
-            taskList[key].age = taskList[key].age + 1;
+        for(var key in this.generalTaskList) {
+            this.generalTaskList[key].age += 1;
         }
-        this.setTaskList(taskList);
     },
     
     calcTaskUrgencyLvl: function(taskName) {
-        var taskList = this.getTaskList();
-        var taskObject = taskList[taskName];
+        var taskObject = this.generalTaskList[taskName];
         var processingCreeps = 0;
         for(var creep in Game.creeps) {
             creep = Game.creeps[creep];
@@ -183,10 +129,6 @@ var manager_task = {
         var creepsFactor = Math.pow(0.5, processingCreeps);
         var result = ((taskObject.urgencyLvl + (taskObject.age * taskObject.factor)) - (10*(taskObject.progressPercentage/100)))*creepsFactor;
         
-        if(processingCreeps > 0) {
-            //console.log(processingCreeps);
-            //console.log(result);
-        }
         return result;
     },
     
@@ -200,17 +142,20 @@ var manager_task = {
     
         if(targetId === undefined) { targetId = structure.id; }
 
-        var taskName = manager_task.getExistingTaskName(structure.id, taskModule.NAME_BASE, targetId);
+        var taskName = this.getExistingTaskName(structure.id, taskModule.NAME_BASE, targetId);
         var task = undefined;
         
         if(!taskName) { task = taskModule.createObject(0, 1, structure.id); } 
-        else { task = manager_task.getTaskByName(taskName); }
+        else { task = this.getTaskByName(taskName); }
         
         task.targetId = targetId;
         task.creatorId = structure.id;
         
         return { taskName: taskName, taskObject: task }
     },
-}
-
-module.exports = manager_task;
+        
+    _deleteTask: function(taskName) {
+        console.log('Deleting task < ' + taskName + ' >');
+        delete this.generalTaskList[taskName];
+    }
+};

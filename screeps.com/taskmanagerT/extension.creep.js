@@ -62,8 +62,7 @@ module.exports = {
     
             if(this.memory.actions.harvest.sourceId === undefined) {
                 
-                var sourceId = this.findOptimalSource();
-                this.memory.actions.harvest.sourceId = sourceId;
+                this.memory.actions.harvest.sourceId = this._findOptimalSource();
             }
             
     	    if(this.carry.energy < this.carryCapacity) {
@@ -75,7 +74,7 @@ module.exports = {
             }
     	},
     	
-    	creep.findOptimalSource = function() {
+    	creep._findOptimalSource = function() {
     	    var sourceId;
     	    
     	    var sourceList = this.room.find(FIND_SOURCES);
@@ -114,13 +113,6 @@ module.exports = {
             }   }
                 
             return sourceId;
-    	},
-    	
-    	/** When a creep is member of a company or/and a battalion
-    	 * 
-    	 */
-    	creep.generalMemory = function(memoryObject) {
-    	    
     	}
 		
 	}

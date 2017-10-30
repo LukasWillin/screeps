@@ -1,7 +1,7 @@
 /*
  * REPLACE WITH manager.structure
  */
-var manager_task = require('manager.task');
+var util_task = require('util.task');
 
 module.exports = {
     

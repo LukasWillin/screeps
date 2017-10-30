@@ -1,7 +1,7 @@
 /*
  * REPLACE WITH MANAGER.TASK
  */
-var manager_task = require('manager.task');
+var util_task = require('util.task');
 
 module.exports = {
     
@@ -76,7 +76,7 @@ module.exports = {
     
     check_Extension_ForTasks: function(structure) {
         if(structure.energy < structure.energyCapacity) {
-            this.createReplenishEnergyTask(structure);
+            return this.createReplenishEnergyTask(structure);
         }
     },
     
@@ -88,8 +88,9 @@ module.exports = {
     
     // >>>> HELPER METHODS
     createReplenishEnergyTask: function(structure){
-        var taskParts = manager_task.createTask(structure, 'task.structure.replenish');
-        return manager_task.setTask(taskParts.taskObject, taskParts.taskName);
+        var taskParts = util_task.createTask(structure, 'task.structure.replenish');
+        taskParts.controllerId = structure.room.controller.id;
+        return util_task.setSharedTask(taskParts.taskObject, taskParts.taskName);
     },
     
     createSpawnCreepTask: function(structure) {
@@ -97,8 +98,9 @@ module.exports = {
     },
     
     createUpgradeTask: function(structure) {
-        var taskParts = manager_task.createTask(structure,'task.structure.upgrade');
-        return manager_task.setTask(taskParts.taskObject, taskParts.taskName);
+        var taskParts = util_task.createTask(structure,'task.structure.upgrade');
+        taskParts.controllerId = structure.room.controller.id;
+        return util_task.setSharedTask(taskParts.taskObject, taskParts.taskName);
     },
     
     

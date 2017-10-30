@@ -3,10 +3,11 @@
  * module.exports.thing = 'a thing';
  *
  * You can import it from another modules like this:
- * var mod = require('utils');
+ * var mod = require('extension.structure');
  * mod.thing == 'a thing'; // true
  */
 
 module.exports = {
 
+    
 };

@@ -78,6 +78,8 @@ module.exports = {
 	        
 	        this.targetId = targetId;
 	        this.sourceId = sourceId;
+	        
+	        this.controllerId = null;
 	        this.requiredBodyParts = [WORK, MOVE, CARRY];
 	        // TODO: Add more properties if required
 	},

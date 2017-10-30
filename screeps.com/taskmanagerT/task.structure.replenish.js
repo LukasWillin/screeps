@@ -54,6 +54,7 @@ module.exports = {
 	    this.urgencyLvl = urgencyLvl;
 	    this.factor = 0.6;
 	    
+	    this.controllerId = null;
 	    this.requiredBodyParts = [WORK, MOVE, CARRY];
 	},
 	

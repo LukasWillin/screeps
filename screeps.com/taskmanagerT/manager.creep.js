@@ -9,7 +9,7 @@ module.exports = {
      *      @property {boolean} ops.battalion - If true it will assign newly created creeps from [amount] companies to one battalion (military). Standard is false.
      *      @property {number} ops.energyAvailable - If set this value will be taken instead of controller.room.energyCapacityAvailable.
      * 
-     * @return {Object} taskList - An object containing all 'ActionSpawn's with keys as their ID.
+     * @return {Object} spawnActions - An object containing all 'ActionSpawn's with keys as their ID.
      */
     getSpawnActions: function(controller, ops) {
         
