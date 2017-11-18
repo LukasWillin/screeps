@@ -7,6 +7,11 @@
  * @type {Object}
  */
 var ActivitySystem = {
+  /* @type {String}
+   * Not is use since implicitly sepcified by package:=activity
+   * & standard:=system
+   */
+  // identifier: 'ActivitySystem'
 
   /**
    * Creates a new managed activity that will be executed by the scheduler.
@@ -14,13 +19,13 @@ var ActivitySystem = {
    *    cMethod(argsByCopy, dataByRef)
    * If a roomID is returned it will replace the old roomID.
    *
-   * @param  {Object} args - Arguments by object.
-   *    @property {string} roomID - ID of the room which is considered the execution environment.
-   *    @property {string} hostID - ID of the host on which the activity is executed.
-   *    @property {Object} execArgs - Arguments that will be handed to the host as copy.
-   *    @property {Object} data - Data container object that is handed to the host by reference.
-   *    @property {number} type - A type constant.
-   *    @property {string} customMethodName - Method name of a custom method if type constant is ANY.
+   * @param {Object} args - Arguments by object.
+   * @param {String} args.roomID  - ID of the room which is considered the execution environment.
+   * @param {String} args.hostID  - ID of the host on which the activity is executed.
+   * @param {Object} args.execArgs - Arguments that will be handed to the host as copy.
+   * @param {Object} args.data    - Data container object that is handed to the host by reference.
+   * @param {number} args.type    - A type constant.
+   * @param {string} args.customMethodName - Method name of a custom method if type constant is ANY.
    */
   create: function(args) {
     var activity = Activity.create(args);
@@ -29,14 +34,19 @@ var ActivitySystem = {
 
     // Notify the scheduler.
   },
-  
+
   /**
    * Executes the activity with ID.
    * @param  {number} ID - ID of the activity.
+   * @return {ReturnMessage} A return message.
    */
   execute: function(ID) {
     var activity = _mem['activites'][ID];
     var host = ObjectSystem.getObjectByID(activity.hostID);
+
+    if(host === undefined || host === null) {
+      return;
+    }
 
     var methodName;
     // Select method name by activity type
@@ -45,8 +55,6 @@ var ActivitySystem = {
         //LogUtil.log();
         return;
     }
-
-
 
   },
 
@@ -80,10 +88,20 @@ var ActivitySystem = {
 
   },
 
+  /** @private
+   * Private memory object reference.
+   * @return {Object<String, Any} Memory object.
+   */
   _mem: (function() {
-    MemoryUtil.getMemory(MemoryUtil.SECURITY.PRIVATE, "activity.system")
+    MemoryUtil.getMemory(
+      MemoryUtil.STANDARDS.SYSTEM,
+      {package: MemoryUtil.PACKAGE.ACTIVITY});
   })(),
 
+  /** @private
+   * Private set of activities.
+   * @return {[type]} [description]
+   */
   _activitySet: (function() {
     var ACTIVITY_SET_PROPERTY_NAME = 'activitySet';
     if(_mem[ACTIVITY_SET_PROPERTY_NAME] === undefined
@@ -95,8 +113,11 @@ var ActivitySystem = {
 
   RESULTS: {
     EXECUTE: {
+      HOST_NOT_FOUND: 0,
       HOST_METHOD_NOT_FOUND: 1,
-      METHOD_NOT_MEMBER_OF_HOST: 2
+      METHOD_NOT_MEMBER_OF_HOST: 2,
+      SUCCESS: 3,
+      EXCEPTION_THROWN: 4
     },
     CREATE: {
       UNSUFFICIENT_ARGUMENTS: 20
@@ -105,18 +126,3 @@ var ActivitySystem = {
 };
 
 module.exports = ActivitySystem
-
-/*
-
- Must be done by the scheduler
- BASE_PRIORITY: {
-   IDLE: 0,
-   LOW: 1,
-   LOWER_THAN_NORMAL: 2,
-   NORMAL: 3,
-   HIGHER_THAN_NORMAL: 4,
-   HIGH: 5,
-   VERY_HIGH: 6,
-   REAL_TIME: 7
- }
- */

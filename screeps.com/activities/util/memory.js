@@ -1,57 +1,29 @@
 
-/**
- * This is a util to manage the memory.
- * The util will build a directory structure like so:
- *
- * [package][standard][custom][identifier]
- *
- * An Alias can be set so that the memory is moved before returned.
- *
- * @type {Object}
- */
 var MemoryUtil = {
 
-    /** Get memory by path (and or alias) and or identifier
-     * All params and options are treated in the following order.
-     * -> [params.package][params.standard][params.custom][identifier]
-     * The [params.alias] is used to transfer data from an old memory object/directory to a new directory.
-     *
-     * @param @required {string} id - Specific directory. Can be an ID or the name of a single object (like an util)
-     * @param {Object} params
-     *    @property {string} package - A package directory constant.            @optional
-     *    @property {string} standard - A standard directory constant.          @optional
-     *    @property {string} custom - A custom directory path.                  @optional
-     *    @property {string} alias - Set if the memory path was different before. @optional
-     *                             TODO Fully implement alias.
-     *
-     * @return {Object} - The requested memory object.
-     */
-    getMemory: function(identifier, params) {
+    getMemory: function(identifier, config) {
       if(!identifier)
         throw {name: "MissingParamError", message: "an identifier must always be defined"};
-
       var path = "";
-      if(params['package']) path = path.concat(".", params['package']);
-      if(params['standard']) path = path.concat(".", params['standard']);
-      if(params['custom']) path = path.concat(".", params['custom']);
+      if(config['package']) path = path.concat(".", config['package']);
+      if(config['standard']) path = path.concat(".", config['standard']);
+      if(config['custom']) path = path.concat(".", config['custom']);
       path = path.concat(".", identifier);
 
-      this._getMemoryByPath(path, params);
+      this._getMemoryByPath(path, config['alias']);
     },
 
     /** @private
      * Get memory by path. If the alias provided exists the memory is first moved to
      * the memory path.
      * @param {string} path
-     * @param {Object} params
-     *    @property {string} alias - Set if the memory path was different before. @optional
+     * @param {string} alias - Set if the memory path was different before. @optional
      *
      * @return {Object} - The requested memory object.
      */
-    _getMemoryByPath: function(path, params) {
+    _getMemoryByPath: function(path, alias) {
         var subMemory
-        if(params['alias']) {
-          var alias = params['alias'];
+        if(alias !== undefined && alias !== null) {
           var aliasParts = _getPathParts(alias);
           subMemory = _getSubMemory(aliasParts);
         }
@@ -248,27 +220,17 @@ var MemoryUtil = {
         return this._mem.aliasTable;
     })(),
 
-    /**
-     * Some general package names.
-     * The package names refer to the folders during development.
-     * @type {Object}
-     */
     PACKAGE: {
-      ACTIVITY: "activity", // for package activity
-      EVENT: "event", // for package event
-      OBJECT: "object", // for package object
-      UTIL: "util", // for package util
-      RESOURCE: "resource", // for package resource
-      GAME: "game" // for game objects > ID enough to keep them apart ?
+      ACTIVITY: "activity",
+      EVENT: "event",
+      OBJECT: "object",
+      UTIL: "util",
+      RESOURCE: "resource",
+      GAME: "game"
     },
 
-    /**
-     * Some general memory paths to
-     * seperate memory by usage or prototype/class.
-     * @type {Object}
-     */
     STANDARDS: {
-      SYSTEM: "system", // for one system in any package
+      SYSTEM: "system",
       CREEP: "creeps",
       STRUCTURE: "structures",
       SOURCE: "sources"

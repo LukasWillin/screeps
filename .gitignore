@@ -1,2 +1,5 @@
-.git
+.git/
 .sync
+.idea/
+atlassian-ide-plugin.xml
+*.sublime-*
