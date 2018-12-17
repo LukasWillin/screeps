@@ -1,4 +1,6 @@
 .git/
+node_modules/
+.tern-project
 .sync
 .idea/
 atlassian-ide-plugin.xml

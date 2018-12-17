@@ -57,9 +57,9 @@ var EventSystem = {
       throw {name: "SubscriptionError", message: "eventTypes.length !== handlerFunctions.length" };
 
     var subscription = {
-      this.id: subscriberID,
-      this.eventTypes = eventTypes
-      this.handlerFunctions = handlerFunctions
+      id: subscriberID,
+      eventTypes: eventTypes,
+      handlerFunctions: handlerFunctions
     }
     this._subscriptions.push(subscription);
   },

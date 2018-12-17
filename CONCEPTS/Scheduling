@@ -1,0 +1,9 @@
+
+const activator = new Activator(new Scheduler());
+
+1. IActivator {Array<IActivity>}=> IScheduler
+2. IActivator => IScheduler.schedule
+
+- All the information for the scheduler should be stored in the Activity
+- The activator must keep track of the used ressources
+- The activator must only run so many activities as necessary

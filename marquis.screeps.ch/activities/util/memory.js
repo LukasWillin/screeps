@@ -1,26 +1,49 @@
 
-var MemoryUtil = {
+class MemoryUtil {
 
-    getMemory: function(identifier, config) {
-      if(!identifier)
+    static get(className, instanceID, alias) {
+
+        if (_.isUndefined(className)) {
+            throw new IllegalArgumentError("Class name must be given to access the memory.");
+        }
+        if (instanceID === 'static') {
+            throw new IllegalArgumentError(`The instance id for memory ${className} must not be "static"`);
+        }
+        if (_.isUndefinedOrNull(instanceID)) {
+            instanceID = "static";
+        }
+        // If an alias is given and the memory object still alive
+        // move it to the new location and the delete it.
+        if (!_.isUndefinedOrNull(alias)) {
+            alias = alias.split('.');
+            const aliasMemory = Memory[alias[0]][alias[1]];
+            if (!_.isUndefinedOrNull(aliasMemory)) {
+                Memory[className][instanceID] = aliasMemory;
+                Memory[alias[0]][alias[1]] = undefined;
+            }
+        }
+
+        return Memory[className][instanceID];
+
+        /*if(!identifier)
         throw {name: "MissingParamError", message: "an identifier must always be defined"};
-      var path = "";
-      if(config['package']) path = path.concat(".", config['package']);
-      if(config['standard']) path = path.concat(".", config['standard']);
-      if(config['custom']) path = path.concat(".", config['custom']);
-      path = path.concat(".", identifier);
+        var path = "";
+        if(config['package']) path = path.concat(".", config['package']);
+        if(config['standard']) path = path.concat(".", config['standard']);
+        if(config['custom']) path = path.concat(".", config['custom']);
+        path = path.concat(".", identifier);
 
-      this._getMemoryByPath(path, config['alias']);
-    },
+        this._getMemoryByPath(path, config['alias']);*/
+    }
 
-    /** @private
+    /* @private
      * Get memory by path. If the alias provided exists the memory is first moved to
      * the memory path.
      * @param {string} path
      * @param {string} alias - Set if the memory path was different before. @optional
      *
      * @return {Object} - The requested memory object.
-     */
+     *
     _getMemoryByPath: function(path, alias) {
         var subMemory
         if(alias !== undefined && alias !== null) {
@@ -42,7 +65,7 @@ var MemoryUtil = {
      * @param {Object} subMemory - Current sub memory. (Passed on recursion) @optional
      *
      * @return {Object} The sub memory or undefined if it doesnt exist.
-     */
+     *
     _getSubMemory: function(pathArray, subMemory, i){
         // Initialize recursion
         if(subMemory === undefined || subMemory === null) subMemory = Memory;
@@ -66,7 +89,7 @@ var MemoryUtil = {
      * @param {Object} subMemory - Current sub memory. (Passed on recursion) @optional
      *
      * @return {Object} The sub memory or undefined if it doesnt exist.
-     */
+     *
     _getOrCreateSubMemory: function(pathArray, subMemory, i) {
         // Initialize recursion
         if(subMemory === undefined || subMemory === null) subMemory = Memory;
@@ -88,7 +111,7 @@ var MemoryUtil = {
      * @param {string} new - The new Memory path
      * @param {string} old - The old Memory path
      * @return {boolean} - registered
-     */
+     *
     _registerAlias: function(new, old) {
         var aliasArray = this._getAliasArray(old);
 
@@ -120,7 +143,7 @@ var MemoryUtil = {
     /** Moves one or multiple memory objects to the new path
      * @param {string} path - New memory path.
      * @return {boolean} - Success
-     */
+     *
     _moveMemoryToAlias: function(path) {
         var pathArray = this._getPathParts(path);
         if( _.contains(pathArray, function(part) { return part.includes('.'); }) )
@@ -165,7 +188,7 @@ var MemoryUtil = {
     /** Get all alias in an array
      * @param {string} path
      * @return {Array}
-     */
+     *
     _getAliasArray: function(path) {
         for(var i in this._aliasTable {
             var aliasRow = this._aliasTable[i];
@@ -178,7 +201,7 @@ var MemoryUtil = {
     /** Returns all active alias paths
      * @param {string} path
      * @return {Array}
-     */
+     *
     _getActiveAliasArray: function(path) {
         var aliasArray = this._getAliasArray(path);
         aliasArray = _.filter(aliasArray, function(curr) { return _checkIfPathActive(curr); });
@@ -188,7 +211,7 @@ var MemoryUtil = {
     /** Checks if memory path is active
      * @param {string} path
      * @return {boolean}
-     */
+     *
     _checkIfPathActive: function(path) {
         var pathArray = _getPathParts(path);
 
@@ -202,7 +225,7 @@ var MemoryUtil = {
     /** Returns path as Array
      * @param {string} path
      * @return {Array}
-     */
+     *
     _getPathParts: function(path) {
         return _.words(path, /[^.]+/g)
     },
@@ -235,7 +258,7 @@ var MemoryUtil = {
       STRUCTURE: "structures",
       SOURCE: "sources"
     }
-
+*/
 };
 
 module.exports = MemoryUtil;
