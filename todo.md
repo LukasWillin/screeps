@@ -1,5 +1,5 @@
 
-
+!! -> Update the god damn Readme...!
 1. Implement a simple basic kernel : kernel.IKernel
 2. Implement a simple basic scheduler : kernel.scheduler.IScheduler
 3. Clean up and better seperate IActivity related entity classes in sub-package kernel
