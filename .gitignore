@@ -4,4 +4,5 @@ node_modules/
 .sync
 .idea/
 atlassian-ide-plugin.xml
-*.sublime-*
+**/*.sublime-*
+**/*.code-workspace
