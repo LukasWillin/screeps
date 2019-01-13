@@ -12,36 +12,42 @@ const getProto = Object.getPrototypeOf;
  * 
  * This allows for instruction function to be either used just once or
  * create implementations which can be redistributed and reused.
- * 
+ * @abstract
  * @implements {IInstructionFunction}
+ * 
+ * @example
+ * // Single use instanciation :
+ *  const singleInstrFn = new AInstructionFunction(function (ths, scope, cache, call, err, ...args) {
+ *      console.log('Do whatever you only need once.');
+ *  });
+ * // or when youwant to reuse it
+ *  class MultiInstructionFunction extends AInstructionFunction {
+ *      exec (ths, scope, cache, call, err, ...args) {
+ *          console.log('Do whatever else you might need multiple times.');
+ *      }
+ *  }
+ *  const multiInstructionFunction = new MultiInstructionFunction();
  */
 class AInstructionFunction extends Function {
     
     /**
      * @param {Function} [fn] - Optional concrete implementation of exec for one time usage.
-     * @example
-     *  const singleInstrFn = new AInstructionFunction(function (ths, scope, cache, call, err, ...args) {
-     *      console.log('Do whatever you only need once.');
-     *  });
-     * // or
-     *  class MultiInstructionFunction extends AInstructionFunction {
-     *      exec (ths, scope, cache, call, err, ...args) {
-     *          console.log('Do whatever else you might need multiple times.');
-     *      }
-     *  }
-     *  const multiInstructionFunction = new MultiInstructionFunction();
      */
     constructor(fn) {
+        const instrFn = function (ths, scope, cache, call, err, ...args) {
+            return instrFn.exec(ths, scope, cache, call, err, ...args);
+        };
+
         if (_.isFunction(fn)) {
-            const instrFn = function (ths, scope, cache, call, err, ...args) {
-                return instrFn.exec(ths, scope, cache, call, err, ...args);
-            };
             setProto(instrFn, {
-                ...getProto(InstructionFunction),
+                ...getProto(this),
                 exec: fn
             });
-            return instrFn;
+        } else {
+            setProto(instrFn, getProto(this));
         }
+
+        return instrFn;
     }
 
     exec(ths, scope, cache, call, err, ...args) {

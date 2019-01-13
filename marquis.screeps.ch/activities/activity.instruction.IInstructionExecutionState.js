@@ -15,11 +15,6 @@
  *      If the error is not assigned a value 'handled = true' the error will be passed to the
  *      the instruction will be ended if the error is not marked as handled. And then passed
  *      to the previous instruction and so forth.
- * @example
- * // First set1 calls set2 which at some point returns a value
- * // The value unless its undefined will be passed as argument
- * // to the next instruction in set1 (which is #1)
- * InstrSet1#0 -> InstrSet2:returns 2 -> InstrSet1#1
  */
 class IInstructionExecutionState { }
 

@@ -1,18 +1,18 @@
 
+const IInstructionFunction = require('./activity.instruction.IInstructionFunction');
 
 /**
  * An instruction is an ordered list of instruction functions.
  * 
- *
- * @public @interface
- * @type {Array<IInstructionFunction>}
+ * @interface
+ * @augments Array<IInstructionFunction>
+ * 
  * @example
  *  const instruction = new IInstruction(
  *      // First instruction function (index:=0) receives the arguments of the caller.
  *      new IInstructionFunction((ths, scope, cache, call, err, ...args) => {
  *          scope.arg0 = args[0];
  *          scope.arg1 = args[1];
- *
  *          call(SomeActivity.anotherInstruction, "any", "arg", {}, 8);
  *      }),
  *      // Later instruction function may receive return results from a previously called instruction.
@@ -25,7 +25,7 @@
  *
  *          scope.out = 1234;
  *          return true;
- *      })
+ *      });
  *  );
  */
 class IInstruction extends Array {

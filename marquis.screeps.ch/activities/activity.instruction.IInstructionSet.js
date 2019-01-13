@@ -3,7 +3,8 @@ const IInstruction = require('./activity.instruction.IInstruction');
 
 /**
  * An instruction set is an unordered hash set of instructions.
- * @type {Object<IInstruction>}
+ * @interface
+ * @augments Object<IInstruction>
  */
 class IInstructionSet {
 

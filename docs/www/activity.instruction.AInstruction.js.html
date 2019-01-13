@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: error/NotImplementedError.js</title>
+    <title>JSDoc: Source: activity.instruction.AInstruction.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: error/NotImplementedError.js</h1>
+    <h1 class="page-title">Source: activity.instruction.AInstruction.js</h1>
 
     
 
@@ -27,24 +27,63 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>
+const _ = require('lodash');
+const AInstructionFunction = require('./activity.instruction.AInstructionFunction');
+const IInstruction = require('./activity.instruction.IInstruction');
+
+const setProto = Object.setPrototypeOf;
+const getProto = Object.getPrototypeOf;
+
 /**
- * Error thrown when Method not implemented.
- * Like from an interface or abstract class.
- * @extends Error
+ * Abstract implementation of IInstruction
  * 
+ * @abstract
+ * @implements {IInstruction}
+ * 
+ * @example
+ *  // Single use instruction
+ *  const instruction = new AInstruction(
+ *      // First instruction function (index:=0) receives the arguments of the caller.
+ *      new AInstructionFunction((ths, scope, cache, call, err, ...args) => {
+ *          scope.arg0 = args[0];
+ *          scope.arg1 = args[1];
+ *          call(SomeActivity.anotherInstruction, "any", "arg", {}, 8);
+ *      }),
+ *      new AInstructionFunction((ths, scope, cache, call, err, ...args) => {
+ *          if (err) return err;
+ *           
+ *          scope.returnValue = args[0];
+ *
+ *          scope.out = 1234;
+ *          return true;
+ *      });
+ *  );
+ *  // Multi use implementation
+ *  class ConcreteInstruction extends AInstruction { }
+ *  Object.defineProperties(ConcreteInstruction.prototype, {
+ *      "0": { 
+ *          value: new AInstructionFunction((ths, scope, cache, call, err, ...args) => {
+ *              scope.arg0 = args[0];
+ *              scope.arg1 = args[1];
+ *              scope.out = "Calculated Result";
+ *              return true;
+ *          })
+ *      }
+ *  });
+ *  const multiConcreteInstruction = new ConcreteInstruction();
  */
-class NotImplementedError extends Error {
+class AInstruction extends Array {
     /**
-     * 
-     * @param {Error} error - Must be an error to preserve the original stack. 
+     * @param  {...IInstructionFunction} instructionFunctions - One or many ordered instruction functions.
      */
-    constructor(error) {
-        super(error.message);
-        this.stack = error.stack;
-        this.name = 'NotImplementedError';
+    constructor(...instructionFunctions) {
+        for(let i = 0, instr = instructionFunctions[i]; i &lt; instructionFunctions.length; instr = instructionFunctions[++i]) {
+            this.push(instr);
+        }
     }
 }
-</code></pre>
+
+module.exports = AInstruction;</code></pre>
         </article>
     </section>
 
