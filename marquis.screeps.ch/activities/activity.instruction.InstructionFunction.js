@@ -1,5 +1,6 @@
 
 const _ = require('lodash');
+const IInstructionFunction = require('./activity.instruction.IInstructionFunction');
 
 const setProto = Object.setPrototypeOf;
 const getProto = Object.getPrototypeOf;
@@ -11,6 +12,8 @@ const getProto = Object.getPrototypeOf;
  * 
  * This allows for instruction function to be either used just once or
  * create implementations which can be redistributed and reused.
+ * 
+ * @implements {IInstructionFunction}
  */
 class AInstructionFunction extends Function {
     

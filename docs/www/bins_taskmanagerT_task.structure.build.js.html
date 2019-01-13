@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: bins/taskmanagerT/task.structure.build.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: bins/taskmanagerT/task.structure.build.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * Module code goes here. Use 'module.exports' to export things:
+ * module.exports.thing = 'a thing';
+ *
+ * You can import it from another modules like this:
+ * var mod = require('task.structure.build');
+ * mod.thing == 'a thing'; // true
+ */
+
+module.exports = {
+    
+    /** @param {Creep} creep 
+        @param {taskObject} task object to be run
+    **/
+    run: function(creep, taskObject) {
+        
+        if(creep.memory.taskInfo === undefined) {
+            creep.memory.taskInfo = {};
+        }
+        if(creep.memory.taskInfo.building === undefined) {
+            creep.memory.taskInfo.building = false;
+        }
+        
+	    if(creep.carry.energy === 0) {
+            creep.memory.taskInfo.building = false;
+            //creep.say('🔄 harvest');
+	    } 
+	    if(creep.carryCapacity === creep.carry.energy) {
+	        creep.memory.taskInfo.building = true;
+	    }
+	    else {
+	        
+	        //creep.say('🚧 build');
+	    }
+
+	    if(creep.memory.taskInfo.building) {
+	        var target = Game.getObjectById(taskObject.targetId);
+            if(target != null) {
+                if(creep.build(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                } else {
+                    taskObject.progressPercentage = taskObject.progressPercentage + 1; //(target.progress/target.progressTotal)*100;
+                }
+            }
+            if (taskObject.progressPercentage >= 100) { taskObject = undefined; }
+            else if(target == null) { taskObject = undefined; }
+            
+            
+	    }
+	    else {
+	        creep.harvestEnergy();
+	    }
+	    
+	    return taskObject;
+	},
+	
+	subTasks: function() {
+	    // TODO: Return needed tasks as object
+	},
+	
+	createObject: function(progressPercentage, urgencyLvl, targetId, sourceId) {
+	    var room = Game.getObjectById(targetId).room.name;
+	    return new this.Object(this.NAME_BASE, this.MODULE, progressPercentage, urgencyLvl, targetId, sourceId, room);
+	},
+	
+	
+	Object: function(nameBase, module, progressPercentage, urgencyLvl, targetId, sourceId, room) {
+	        this.nameBase = nameBase;
+	        this.module = module;
+	        this.room = room;
+	        
+	        this.creatorId = ''; // will be set after creation
+	        this.progressPercentage = progressPercentage;
+	        this.urgencyLvl = urgencyLvl;
+	        this.subTasks = {};
+	        this.factor = 0.01;
+	        this.assignedCreeps = [];
+	        
+	        this.targetId = targetId;
+	        this.sourceId = sourceId;
+	        
+	        this.controllerId = null;
+	        this.requiredBodyParts = [WORK, MOVE, CARRY];
+	        // TODO: Add more properties if required
+	},
+	
+	/** @const {string} */
+	NAME_BASE: 'taskBuild',
+	
+	/** @const {string} */
+	MODULE:'task.structure.build'
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-my_pants.html">my/pants</a></li></ul><h3>Classes</h3><ul><li><a href="AActivity.html">AActivity</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="Instruction.html">Instruction</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="module.exports.Object.html">Object</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 13 2019 02:31:05 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

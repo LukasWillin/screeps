@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: bins/taskmanagerT/manager.creep.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: bins/taskmanagerT/manager.creep.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+module.exports = {
+    /**
+     * @param {Controller} controller - Needed to identify to whom the creeps belong.
+     * @param {Object} ops - Options can contain following keys:
+     *      @property {number} ops.type - Any of the TYPE.CONST values. Standard is WORKER.     
+     *      @property {number} ops.amount - Number of given type to spawn. Standard is 1.
+     *      @property {boolean} ops.company - If true it will create [amount] companies (military). A company is formed by 3 or more creeps. Standard is false. Standard type (if undefined) is KNIGHT.
+     *      @property {boolean} ops.battalion - If true it will assign newly created creeps from [amount] companies to one battalion (military). Standard is false.
+     *      @property {number} ops.energyAvailable - If set this value will be taken instead of controller.room.energyCapacityAvailable.
+     * 
+     * @return {Object} spawnActions - An object containing all 'ActionSpawn's with keys as their ID.
+     */
+    getSpawnActions: function(controller, ops) {
+        
+        if(ops === undefined) ops = {};
+        if(ops.amount === undefined || ops.amount &lt; 1) ops.amount = 1;
+        if(ops.type === undefined) ops.type = this.TYPE.WORKER;
+        if(ops.energyAvailable === undefined || ops.energyAvailable &lt; 1) ops.energyAvailable = controller.room.energyCapacityAvailable;
+        if(ops.battalion) ops.company = true;
+        
+        var spawnActions;
+
+        if(ops.company) {
+            
+        } else {
+            var body;
+            var bodyMethod;
+            switch(ops.type) {
+                case this.TYPE.WORKER:
+                    bodyMethod = this.getBody_Worker; break;
+                case this.TYPE.CARRIER:
+                    bodyMethod = this.getBody_Carrier; break;
+                case this.TYPE.HEALER:
+                    bodyMethod = this.getBody_Healer; break;
+                case this.TYPE.AMBASSADOR:
+                    bodyMethod = this.getBody_Ambassador; break;
+                case this.TYPE.KNIGHT:
+                    bodyMethod = this.getBody_Knight; break;
+                case this.TYPE.MARKSMAN:
+                    bodyMethod = this.getBody_Marksman; break;
+            }
+            body = this.getBest_Body(bodyMethod, energyAvailable);
+            
+            for(var i = 0; i &lt; ops.amount; i++) {
+                
+            }
+        }
+
+        return spawnActions;
+    },
+    
+    /** gets the best possible body
+     * 
+     */
+    getBest_Body: function(bodyMethod, energyAvailable) {
+        var body;
+        var lvl = 0;
+        var cost = 0;
+        var i = 0;
+        while(cost &lt; energyAvailable) {
+            
+        }
+        
+        return body;
+    },
+    
+    getBody_Worker: function(lvl, body) {
+        
+    },
+    
+    getBody_Carrier: function(lvl) {
+        
+    },
+    
+    getBody_Healer: function(lvl) {
+        
+    },
+    
+    getBody_Ambassador: function() {
+        
+    },
+    
+    getBody_Knight: function(lvl) {
+       
+    },
+    
+    getBody_Marksman: function(lvl) {
+        
+    },
+    
+    WORKER_CLASS: {
+        LVL_1: [WORK, CARRY, MOVE, MOVE],
+        LVL_2: [WORK, WORK, CARRY, MOVE, MOVE, MOVE],
+        LVL_3: [WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE, MOVE]
+    },
+    
+    /** @const {Object} */
+    TYPE: {
+        /** @const {number} */
+        WORKER: 1,
+        /** @const {number} */
+        CARRIER: 2,
+        /** @const {number} */
+        HEALER: 3,
+        /** @const {number} */
+        AMBASSADOR: 4,
+        /** @const {number} */
+        KNIGHT: 5,
+        /** @const {number} */
+        MARKSMAN: 6
+    },
+    
+    getNewBattalionId: function() {
+        if(Memory.usedIds === undefined)
+            Memory.usedIds = {};
+        if (Memory.usedIds.battalionId === undefined)
+            Memory.usedIds.battalionId = 0;
+        Memory.usedIds.battalionId += 1;
+        var battalionId = Memory.usedIds.battalionId;
+        return (battalionId*1000) + Math.floor(Math.random()*1000);
+    },
+    
+    getNewCompanyId: function() {
+        if(Memory.usedIds === undefined)
+            Memory.usedIds = {};
+        if (Memory.usedIds.companyId === undefined)
+            Memory.usedIds.companyId = 0;
+        Memory.usedIds.companyId += 1;
+        var companyId = Memory.usedIds.companyId;
+        return (companyId*1000) + Math.floor(Math.random()*1000);
+    }
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-my_pants.html">my/pants</a></li></ul><h3>Classes</h3><ul><li><a href="AActivity.html">AActivity</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="Instruction.html">Instruction</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="module.exports.Object.html">Object</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 13 2019 02:31:05 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

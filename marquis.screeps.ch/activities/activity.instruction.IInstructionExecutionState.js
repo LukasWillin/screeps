@@ -1,6 +1,10 @@
+
+
 /**
+ * The instruction function execution state keeps track of the progress of an instruction.
  * An instruction ends when it returns truthy or it reached the end. The output value
  * must be assigned to the out variable within the scope.
+ * @interface
  * @property {string} instructionName - An ordered instructions list.
  * @property {int} nextFn - Next instruction within the instruction (list).
  * @property {Array<any>} args - The arguments to be passed to the next instruction function.
@@ -17,8 +21,6 @@
  * // to the next instruction in set1 (which is #1)
  * InstrSet1#0 -> InstrSet2:returns 2 -> InstrSet1#1
  */
-class IInstructionExecutionState {
-    constructor(instructionName, nextFn, args, scope, err) {}
-}
+class IInstructionExecutionState { }
 
 module.exports = IInstructionExecutionState;

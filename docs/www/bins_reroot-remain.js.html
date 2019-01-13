@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: bins/reroot-remain.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: bins/reroot-remain.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+const isFunction = (function() {
+    /**
+     * Lodash (Custom Build) &lt;https://lodash.com/>
+     * Build: `lodash modularize exports="npm" -o ./`
+     * Copyright JS Foundation and other contributors &lt;https://js.foundation/>
+     * Released under MIT license &lt;https://lodash.com/license>
+     * Based on Underscore.js 1.8.3 &lt;http://underscorejs.org/LICENSE>
+     * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors
+     */
+    var asyncTag = '[object AsyncFunction]',
+        funcTag = '[object Function]',
+        genTag = '[object GeneratorFunction]',
+        nullTag = '[object Null]',
+        proxyTag = '[object Proxy]',
+        undefinedTag = '[object Undefined]';
+    var freeGlobal = typeof global == 'object' &amp;&amp; global &amp;&amp; global.Object === Object &amp;&amp; global;
+    var freeSelf = typeof self == 'object' &amp;&amp; self &amp;&amp; self.Object === Object &amp;&amp; self;
+    var root = freeGlobal || freeSelf || Function('return this')();
+    var objectProto = Object.prototype;
+    var hasOwnProperty = objectProto.hasOwnProperty;
+    var nativeObjectToString = objectProto.toString;
+    var Symbol = root.Symbol, symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+    function baseGetTag(value) {
+        if (value == null) {
+            return value === undefined ? undefinedTag : nullTag;
+        }
+        return (symToStringTag &amp;&amp; symToStringTag in Object(value))
+            ? getRawTag(value)
+            : objectToString(value);
+    }
+    function getRawTag(value) {
+        var isOwn = hasOwnProperty.call(value, symToStringTag),
+            tag = value[symToStringTag];
+
+        try {
+            value[symToStringTag] = undefined;
+            var unmasked = true;
+        } catch (e) { }
+
+        var result = nativeObjectToString.call(value);
+        if (unmasked) {
+            if (isOwn) {
+                value[symToStringTag] = tag;
+            } else {
+                delete value[symToStringTag];
+            }
+        }
+        return result;
+    }
+    function objectToString(value) {
+        return nativeObjectToString.call(value);
+    }
+    function __isFunction(value) {
+        if (!__isObject(value)) {
+            return false;
+        }
+        // The use of `Object#toString` avoids issues with the `typeof` operator
+        // in Safari 9 which returns 'object' for typed arrays and other constructors.
+        var tag = baseGetTag(value);
+        return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+    }
+    function __isObject(value) {
+        var type = typeof value;
+        return value != null &amp;&amp; (type == 'object' || type == 'function');
+    }
+    return __isFunction;
+})();
+
+const isString = (function () {
+    /**
+     * lodash 4.0.1 (Custom Build) &lt;https://lodash.com/>
+     * Build: `lodash modularize exports="npm" -o ./`
+     * Copyright 2012-2016 The Dojo Foundation &lt;http://dojofoundation.org/>
+     * Based on Underscore.js 1.8.3 &lt;http://underscorejs.org/LICENSE>
+     * Copyright 2009-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters &amp; Editors
+     * Available under MIT license &lt;https://lodash.com/license>
+     */
+    var stringTag = '[object String]';
+    var objectProto = Object.prototype;
+    var objectToString = objectProto.toString;
+    var isArray = Array.isArray;
+    function isObjectLike(value) {
+        return !!value &amp;&amp; typeof value == 'object';
+    }
+    function __isString(value) {
+        return typeof value == 'string' ||
+            (!isArray(value) &amp;&amp; isObjectLike(value) &amp;&amp; objectToString.call(value) == stringTag);
+    }
+    return __isString;
+})();
+
+module.exports = function factory(options, indexModuleName, indexModuleFactory) {
+
+    if (arguments.length === 1) {
+        indexModuleFactory = options;
+        options = {};
+        indexModuleName = "";
+    } else if (arguments.length === 2) {
+        indexModuleFactory = indexModuleName;
+        indexModuleName = "";
+    }
+
+    if (!options.toNodeModule) {
+        options.toNodeModule = true;
+        const factoryArgs = [null, options, indexModuleName, indexModuleFactory];
+        let _factory = factory.bind.apply(factory, factoryArgs);
+        function reroot(remain) {
+            options.parentRemain = remain;
+            return _factory.call();
+        };
+        reroot.name = "reroot";
+        return reroot;
+    }
+
+    // Remain Factory
+    const mainRequire = require.bind(require.main);
+
+    class MainModulePathError extends Error {
+        constructor(message) {
+            super(message);
+            this.name = "MainModulePathError";
+        }
+    }
+
+    let _rootPath = "";
+    let _indexRequire = null;
+    let _parentRemain = null;
+    let _indexModuleName = "";
+    let _indexModuleFactory = null;
+    let _indexModule = null;
+    let _remain_modules = {};
+
+    /**
+     * Shortcut and sanitizer to call require.main.require as a resolver of "absolute" paths
+     * based on the index folder.
+     * @param {string} modulePath - A static module path based on the index folder.
+     *      Can either be "/package/path/to/file"
+     *          or "./package/path/to/file"
+     *          or "package/path/to/file"
+     * @returns {any} The resolved file.
+     */
+    function remain(modulePath) {
+        // Sanitize module paths.
+        if (remain.rootPath !== undefined) {
+            modulePath = remain.rootPath + modulePath;
+        }
+        if (modulePath.startsWith("/")) {
+            modulePath = "." + modulePath;
+        }
+
+        if (!modulePath.startsWith(".")) {
+            if (remain.parentRemain) {
+                return remain.parentRemain(modulePath);
+            } else {
+                // TODO: Check if entry exists or else throw error
+                return _remain_modules[modulePath];
+            }
+        }
+
+        /* Require the module
+         * Check if the module is already rerooted.
+         * If not call the reroot function and pass configured remain function. */
+        const reroot = remain.require(modulePath);
+
+        if (isFunction(reroot) &amp;&amp; reroot.name === "reroot") {
+            if (!reroot._rooted) {
+                reroot._exports = reroot(remain);
+                reroot._rooted = true;
+            }
+            return reroot._exports;
+        }
+        return reroot;
+    }
+
+    Object.defineProperties(remain, {
+        rootPath: {
+            get: function () {
+                return _rootPath;
+            }
+        },
+        require: {
+            get: function () {
+                return (_indexRequire) ? _indexRequire : mainRequire;
+            }
+        },
+        indexModule: {
+            get: function () {
+                return _indexModule;
+            }
+        },
+        parentRemain: {
+            get: function () {
+                return _parentRemain;
+            }
+        },
+        indexName: {
+            get: function () {
+                return _indexName;
+            }
+        },
+        register: {
+            value: function (name, indexModule) {
+                // if (isString(indexModule)) indexModule = remain(indexModule);
+                if (name === "") return;
+                
+                if (remain.parentRemain !== null) {
+                    remain.parentRemain.register(name, indexModule);
+                } else { // TODO: RemainModule passed
+                    _remain_modules[name] = indexModule;
+                }
+            }
+        },
+        name: {
+            get: function() {
+                return "remain";
+            }
+        }
+    });
+
+    // Set options
+    if (options.parentRemain) _parentRemain = options.parentRemain;
+
+    _indexModuleName = indexModuleName;
+    _indexModuleFactory = indexModuleFactory;
+    if (options.rootPath) _rootPath = options.rootPath;
+    if (options.indexRequire) _indexRequire = options.indexRequire;
+
+    _indexModule = indexModuleFactory(remain);
+    remain.register(_indexModuleName, _indexModule);
+
+    return _indexModule;
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-my_pants.html">my/pants</a></li></ul><h3>Classes</h3><ul><li><a href="AActivity.html">AActivity</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="Instruction.html">Instruction</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="module.exports.Object.html">Object</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 13 2019 02:31:05 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
