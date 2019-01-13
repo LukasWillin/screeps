@@ -1,46 +1,28 @@
 
-# Rules
-## Package Rules
-Packages should always follow these rule:
-	- [NameOf DataObject].js
-	- system.js (... managing the data object inside the same package)
-	or
-	- [NameOf ManagedSource].js (contains an object called "[NameOf ManagedSource]Util.js")
-
-Where ever possible you should only work with the data objects through the
-system's api.
-
-Use the word 'host' for objects handling an activity.
-Use the word 'handlerFunction' for functions taking the activity.
-
 # Idea
-## Activities
+## Activity
 An activity is a little bit like a process in a computer system. Its a standardized way
 for the scheduler to do his work.
-An activity contains information about the progress of a task and additional information
-such as the room which created it allow for prioritization of the activity.
-The Activity object contains a lot of constants that are used to pass the activity
-and optional arguments to the handling objects such as a creep.
-There is a special constant which allows the creator to let an activity be handled differently
-then the standard allows. Which is the number 0. Like so a custom function can be set.
-Some activities can be static and require a custom function. Static activities
-dont have progression are called as long the handler exists.
+An activity implements a static set of instructions.
+
+## Instruction
+And instruction is an ordered list of one or many instruction functions.
+The Kernel will call them one by one.
+While very simple instructions may only contain 1 function, instructions which need to run for a longer time however
+can be preempted after one function before the next is being called.
+Instructions are provided with a persistent memory object and a cache object as well as the activity entity. The cache can be used to prevent recalculations between instructions within a single tick.
+
+## Instruction Function
+An instruction function has a defined signature and is called by the kernel.
+Functions from the same instruction share a scope and cache object as well as have access to
+the activity memory object.
 
 ## Scheduler
-Managing the list of activities by priority. Then calling activities as long
-as the cpu constraints allow it.
-The scheduler is also accountable for managing the cpu constraints:
-- During peacefull times try to save up cpu
-- When being attacked or atting others use little more cpu than allowed.
-- Use the cpu only for important activities. This partially requires that all object registering activities try to be honest
- 	and consciously when providing an importancy factor
+Managing the list of activities and prioritize priority.
+The scheduler is also accountable for managing the cpu constraints.
 
-# Uploading to screeps
-Before uploading changes to screeps:
-Create a new txt file into which you copy all parts directly. After that create
-a minified version of it which you then upload to screeps.
-Store the full text and the minified version in the version folder after uploading to screeps.com.
-
-File name: "Activities_V-major.minor.patch" /+ "minified"
-
-Add a Readme.md with the changes.
+## Kernel
+The kernel executes activities depending on the prioritization of the scheduler.
+It needs to keep track of usage stats and persist activities and provide instruction function with required
+data structures.
+The kernel needs to be able to resume an activity and its instructions.
