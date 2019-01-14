@@ -12,7 +12,8 @@
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_",
     "include": [
-      "marquis.screeps.ch/activities"
+      "marquis.screeps.ch/activities",
+      "Readme.md"
     ]
   },
   "sourceType": "module",

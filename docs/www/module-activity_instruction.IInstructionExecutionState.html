@@ -330,6 +330,315 @@
 
 
 
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-activity_instruction.html">activity/instruction</a>.</span>IInstructionExecutionState</h2>
+        
+            <div class="class-description">The instruction function execution state keeps track of the progress of an instruction.An instruction ends when it returns truthy or it reached the end. The output valuemust be assigned to the out variable within the scope.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>activityType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The name / type of the instruction implementing the instruction.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>instructionName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the instruction.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nextFn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Next instruction within the instruction (list).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;any></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The arguments to be passed to the next instruction function.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">scope of the instruction set.
+                <h6>Properties</h6>
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>out</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The value returned should be assigned to this property.     Everything will be accepted as an output variable. Even 'undefined'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>err</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Error</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The last error which occured.     If the error is not assigned a value 'handled = true' the error will be passed to the     the instruction will be ended if the error is not marked as handled. And then passed     to the previous instruction and so forth.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.instruction.IInstructionExecutionState.js.html">activity.instruction.IInstructionExecutionState.js</a>, <a href="activity.instruction.IInstructionExecutionState.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
 </div>
 
 <nav>
@@ -339,7 +648,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 23:03:06 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 23:21:23 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

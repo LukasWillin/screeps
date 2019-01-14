@@ -295,6 +295,654 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id=".initCache"><span class="type-signature">(static) </span>initCache<span class="signature">(activityEntity, nextInstruction, cache)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes given cache object with required data to run a certain instruction.The init cache is ran once before the first call to any instruction.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>activityEntity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IActivityEntity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The persisted activity entity from memory.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nextInstruction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IInstruction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The instruction which will be called next.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An empty object to initialize.     This object is a shortcut to 'activityInstance.cache'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-activity.html">activity</a>.</span>IActivity</h2>
+        
+            <div class="class-description">An activity implements the logic to execute specific task(s).The activity class never creates instances but implements the static instructionsto execute upon an activity entity.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>IInstructionSet</li>
+        
+    </ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".initCache"><span class="type-signature">(static) </span>initCache<span class="signature">(activityEntity, nextInstruction, cache)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes given cache object with required data to run a certain instruction.The init cache is ran once before the first call to any instruction.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>activityEntity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IActivityEntity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The persisted activity entity from memory.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nextInstruction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IInstruction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The instruction which will be called next.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An empty object to initialize.     This object is a shortcut to 'activityInstance.cache'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".initCache"><span class="type-signature">(static) </span>initCache<span class="signature">(activityEntity, nextInstruction, cache)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Initializes given cache object with required data to run a certain instruction.The init cache is ran once before the first call to any instruction.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>activityEntity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IActivityEntity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The persisted activity entity from memory.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nextInstruction</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IInstruction</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The instruction which will be called next.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An empty object to initialize.     This object is a shortcut to 'activityInstance.cache'.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -316,7 +964,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 23:03:05 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 23:21:23 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

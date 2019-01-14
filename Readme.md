@@ -1,8 +1,8 @@
 
-# A scheduling library for (screeps.com)[https://screeps.com/]
+# A scheduling library for [screeps.com](https://screeps.com/)
 Check out the MMO for devs at https://screeps.com/  🙌
 
-# Idea
+# Idea Outline
 ## Activity
 An activity is a little bit like a process in a computer system. Its a standardized way
 for the scheduler to do his work.

@@ -323,6 +323,720 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="initCache"><span class="type-signature"></span>initCache<span class="signature">(mem, cache, scope, nextFnIndex)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IActivityEntity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The activity entity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An empty object to use as instruction function cache.     This cache should be initialized. Returned values are ignored.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Persisted Instruction scope</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nextFnIndex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The instruction function which will be executed.     Can be used to prevent unnecessary initialization when instruction is resumed and some     Data isnt be needed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.instruction.IInstruction.js.html">activity.instruction.IInstruction.js</a>, <a href="activity.instruction.IInstruction.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-activity_instruction.html">activity/instruction</a>.</span>IInstruction</h2>
+        
+            <div class="class-description">An instruction is an ordered list of instruction functions.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.instruction.IInstruction.js.html">activity.instruction.IInstruction.js</a>, <a href="activity.instruction.IInstruction.js.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    <pre class="prettyprint"><code>const instruction = new IInstruction(     // First instruction function (index:=0) receives the arguments of the caller.     new IInstructionFunction((mem, scope, cache, call, err, ...args) => {         scope.arg0 = args[0];         scope.arg1 = args[1];         call(SomeActivity.anotherInstruction, "any", "arg", {}, 8);     }),     // Later instruction function may receive return results from a previously called instruction.     // Note that invocations of other instructions through 'call' will always require a split of an instruction     // function into two.     new IInstructionFunction((mem, scope, cache, call, err, ...args) => {         if (err) return err;                   scope.returnValue = args[0];         scope.out = 1234;         return true;     }); );</code></pre>
+
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>Array.&lt;IInstructionFunction></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="initCache"><span class="type-signature"></span>initCache<span class="signature">(mem, cache, scope, nextFnIndex)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IActivityEntity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The activity entity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An empty object to use as instruction function cache.     This cache should be initialized. Returned values are ignored.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Persisted Instruction scope</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nextFnIndex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The instruction function which will be executed.     Can be used to prevent unnecessary initialization when instruction is resumed and some     Data isnt be needed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.instruction.IInstruction.js.html">activity.instruction.IInstruction.js</a>, <a href="activity.instruction.IInstruction.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="initCache"><span class="type-signature"></span>initCache<span class="signature">(mem, cache, scope, nextFnIndex)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mem</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IActivityEntity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The activity entity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cache</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An empty object to use as instruction function cache.     This cache should be initialized. Returned values are ignored.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Persisted Instruction scope</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nextFnIndex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The instruction function which will be executed.     Can be used to prevent unnecessary initialization when instruction is resumed and some     Data isnt be needed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.instruction.IInstruction.js.html">activity.instruction.IInstruction.js</a>, <a href="activity.instruction.IInstruction.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -344,7 +1058,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 23:03:05 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 23:21:23 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
