@@ -141,7 +141,7 @@
     <dt class="implements">Implements:</dt>
     <dd class="implements"><ul>
         
-            <li><a href="IInstructionFunction.html">IInstructionFunction</a></li>
+            <li>IInstructionFunction</li>
         
     </ul></dd>
     
@@ -212,318 +212,6 @@
     
 
     
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="exec"><span class="type-signature"></span>exec<span class="signature">(mem, scope, cache, call, err, &hellip;args)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>mem</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The this arguments which will be passed to the instruction function.     Use it instead of 'this'.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>scope</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The scope of the function. This object will be persistet so you should think twice     about which data you want to store here.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>cache</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">This is the cache which only exists during a single tick. aka is not persisted.     Here you can store alive ingame objects etc.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>call</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">A function to be used to call other instructions.     Its signature is (mem, instructionName, ...args).</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>err</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Error</span>
-|
-
-<span class="param-type">undefined</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">You might want to check if an error occured in a subsequently called instruction.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>args</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                    &lt;repeatable><br>
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Any arguments passed to the instruction.     Note that only the first instruction function receives arguments so you want to persist these in the scope right away.     Following instruction functions might also receive a single argument being the return value     if they have called other instructions.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="implements">Implements:</dt>
-    <dd class="implements"><ul>
-        
-            <li><a href="IInstructionFunction.html#exec">IInstructionFunction#exec</a></li>
-        
-    </ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="activity.instruction.IInstructionFunction.js.html">activity.instruction.IInstructionFunction.js</a>, <a href="activity.instruction.IInstructionFunction.js.html#line63">line 63</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
 
     
 
@@ -538,13 +226,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IActivity.html">IActivity</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-activity.html">activity</a></li><li><a href="module-activity_instruction.html">activity/instruction</a></li></ul><h3>Classes</h3><ul><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="module-activity_instruction.AInstruction.html">AInstruction</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="module-activity.IActivityEntity.html">IActivityEntity</a></li><li><a href="module-activity.IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="module-activity_instruction.IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="module-activity_instruction.IInstructionFunction.html">IInstructionFunction</a></li><li><a href="module-activity_instruction.IInstructionSet.html">IInstructionSet</a></li><li><a href="module-activity_instruction-IInstruction.html">IInstruction</a></li><li><a href="module-activity-IActivity.html">IActivity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 00:47:56 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 22:13:16 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -14,6 +14,7 @@ const getProto = Object.getPrototypeOf;
  * create implementations which can be redistributed and reused.
  * @abstract
  * @implements {IInstructionFunction}
+ * @memberof module:activity/instruction
  * 
  * @example
  * // Single use instanciation :

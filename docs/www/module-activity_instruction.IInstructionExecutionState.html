@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Interface: IInstructionExecutionState</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Interface: IInstructionExecutionState</h1>
 
     
 
@@ -28,7 +28,10 @@
 
 <header>
     
-        <h2></h2>
+        <h2>
+            <span class="ancestors"><a href="module-activity_instruction.html">activity/instruction</a>.</span>IInstructionExecutionState</h2>
+        
+            <div class="class-description">The instruction function execution state keeps track of the progress of an instruction.An instruction ends when it returns truthy or it reached the end. The output valuemust be assigned to the out variable within the scope.</div>
         
     
 </header>
@@ -39,78 +42,6 @@
         
 
         
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="InstructionState"><span class="type-signature">(constant) </span>InstructionState<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    An instruction ends when it returns truthy or it reached the end. The output valuemust be assigned to the out variable within the scope.
-</div>
-
-
-
-
-
 
 
     <h5 class="subsection-title">Properties:</h5>
@@ -139,13 +70,13 @@
 
         <tr>
             
-                <td class="name"><code>fns</code></td>
+                <td class="name"><code>activityType</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;function()></span>
+<span class="param-type">string</span>
 
 
             
@@ -155,7 +86,30 @@
 
             
 
-            <td class="description last">An ordered instructions list.</td>
+            <td class="description last">The name / type of the instruction implementing the instruction.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>instructionName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the instruction.</td>
         </tr>
 
     
@@ -178,7 +132,30 @@
 
             
 
-            <td class="description last">Next instruction within the instruction set.</td>
+            <td class="description last">Next instruction within the instruction (list).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;any></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The arguments to be passed to the next instruction function.</td>
         </tr>
 
     
@@ -311,7 +288,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.scheduler.IScheduler.js.html">kernel.scheduler.IScheduler.js</a>, <a href="kernel.scheduler.IScheduler.js.html#line65">line 65</a>
+        <a href="activity.instruction.IInstructionExecutionState.js.html">activity.instruction.IInstructionExecutionState.js</a>, <a href="activity.instruction.IInstructionExecutionState.js.html#line22">line 22</a>
     </li></ul></dd>
     
 
@@ -323,16 +300,22 @@
 </dl>
 
 
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// First set1 calls set2 which at some point returns a value// The value unless its undefined will be passed as argument// to the next instruction in set1 (which is #1)InstrSet1#0 -> InstrSet2:returns 2 -> InstrSet1#1</code></pre>
-
-
-
         
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 
     

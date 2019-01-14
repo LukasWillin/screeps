@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: MissingArgumentError</title>
+    <title>JSDoc: Class: AInstructionFunction</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: MissingArgumentError</h1>
+    <h1 class="page-title">Class: AInstructionFunction</h1>
 
     
 
@@ -28,9 +28,10 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>MissingArgumentError<span class="signature">(error)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature">(abstract) </span></span>
+            <span class="ancestors"><a href="module-activity_instruction.html">activity/instruction</a>.</span>AInstructionFunction<span class="signature">(fn<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Thrown when a required argument is missing from a function/constructor call.</div>
+            <div class="class-description">General implementation to create Instruction functions.It can either be extended and override abstract exec (multi use & redistribution) or directlypass the concrete exec implementation (one time use).This allows for instruction function to be either used just once orcreate implementations which can be redistributed and reused.</div>
         
     
 </header>
@@ -45,7 +46,7 @@
     
 
     
-    <h4 class="name" id="MissingArgumentError"><span class="type-signature"></span>new MissingArgumentError<span class="signature">(error)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="AInstructionFunction"><span class="type-signature">(abstract) </span>new AInstructionFunction<span class="signature">(fn<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -73,6 +74,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -85,23 +88,33 @@
 
         <tr>
             
-                <td class="name"><code>error</code></td>
+                <td class="name"><code>fn</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Error</span>
+<span class="param-type">function</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Must be an error to preserve the original stack.</td>
+            <td class="description last">Optional concrete implementation of exec for one time usage.</td>
         </tr>
 
     
@@ -126,6 +139,13 @@
     
 
     
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>IInstructionFunction</li>
+        
+    </ul></dd>
+    
 
     
 
@@ -142,7 +162,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="error_MissingArgumentError.js.html">error/MissingArgumentError.js</a>, <a href="error_MissingArgumentError.js.html#line7">line 7</a>
+        <a href="activity.instruction.AInstructionFunction.js.html">activity.instruction.AInstructionFunction.js</a>, <a href="activity.instruction.AInstructionFunction.js.html#line32">line 32</a>
     </li></ul></dd>
     
 
@@ -169,20 +189,14 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Single use instanciation : const singleInstrFn = new AInstructionFunction(function (mem, scope, cache, call, err, ...args) {     console.log('Do whatever you only need once.'); });// or when youwant to reuse it class MultiInstructionFunction extends AInstructionFunction {     exec (mem, scope, cache, call, err, ...args) {         console.log('Do whatever else you might need multiple times.');     } } const multiInstructionFunction = new MultiInstructionFunction();</code></pre>
+
+
 
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li>Error</li>
-    </ul>
-
 
     
 

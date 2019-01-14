@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: activity.instruction.AInstruction.js</title>
+    <title>JSDoc: Source: activity.IActivityExecutionStack.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: activity.instruction.AInstruction.js</h1>
+    <h1 class="page-title">Source: activity.IActivityExecutionStack.js</h1>
 
     
 
@@ -27,64 +27,20 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>
-const _ = require('lodash');
-const AInstructionFunction = require('./activity.instruction.AInstructionFunction');
-const IInstruction = require('./activity.instruction.IInstruction');
-
-const setProto = Object.setPrototypeOf;
-const getProto = Object.getPrototypeOf;
+const IInstructionExecutionState = require('./activity.instruction.IInstructionExecutionState');
 
 /**
- * Abstract implementation of IInstruction
+ * An array serving as a stack for the execution state of an activity.
+ * @interface
+ * @memberof module:activity
  * 
- * @abstract
- * @implements {IInstruction}
- * @memberof module:activity/instruction
- * 
- * @example
- *  // Single use instruction
- *  const instruction = new AInstruction(
- *      // First instruction function (index:=0) receives the arguments of the caller.
- *      new AInstructionFunction((mem, scope, cache, call, err, ...args) => {
- *          scope.arg0 = args[0];
- *          scope.arg1 = args[1];
- *          call(SomeActivity.anotherInstruction, "any", "arg", {}, 8);
- *      }),
- *      new AInstructionFunction((mem, scope, cache, call, err, ...args) => {
- *          if (err) return err;
- *           
- *          scope.returnValue = args[0];
- *
- *          scope.out = 1234;
- *          return true;
- *      });
- *  );
- *  // Multi use implementation
- *  class ConcreteInstruction extends AInstruction { }
- *  Object.defineProperties(ConcreteInstruction.prototype, {
- *      "0": { 
- *          value: new AInstructionFunction((mem, scope, cache, call, err, ...args) => {
- *              scope.arg0 = args[0];
- *              scope.arg1 = args[1];
- *              scope.out = "Calculated Result";
- *              return true;
- *          })
- *      }
- *  });
- *  const multiConcreteInstruction = new ConcreteInstruction();
+ * @augments Array&lt;IInstructionExecutionState>
  */
-class AInstruction extends Array {
-    /**
-     * @param  {...IInstructionFunction} instructionFunctions - One or many ordered instruction functions.
-     */
-    constructor(...instructionFunctions) {
-        for(let i = 0, instr = instructionFunctions[i]; i &lt; instructionFunctions.length; instr = instructionFunctions[++i]) {
-            this.push(instr);
-        }
-    }
+class IActivityExecutionStack extends Array {
+
 }
 
-module.exports = AInstruction;</code></pre>
+module.exports = IActivityExecutionStack;</code></pre>
         </article>
     </section>
 

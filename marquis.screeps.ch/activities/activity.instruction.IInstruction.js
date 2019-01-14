@@ -1,4 +1,9 @@
 
+/**
+ * @module activity/instruction
+ */
+module;
+
 const IInstructionFunction = require('./activity.instruction.IInstructionFunction');
 
 /**

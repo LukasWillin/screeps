@@ -28,7 +28,8 @@
 
 <header>
     
-        <h2>IActivity</h2>
+        <h2>
+            <span class="ancestors"><a href="module-module.html">module</a>~</span>IActivity</h2>
         
             <div class="class-description">An activity implements the logic to execute specific task(s).The activity class never creates instances but implements the static instructionsto execute upon an activity entity.</div>
         
@@ -108,154 +109,6 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id=".run"><span class="type-signature">(static) </span>run<span class="type-signature"> :<a href="IInstruction.html">IInstruction</a></span></h4>
-
-
-
-
-<div class="description">
-    An activity must at least implement one instruction to be run by the schedulerwith the property name 'run'. This is the root instruction at which theexecution starts or resumes from.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="IInstruction.html">IInstruction</a></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line45">line 45</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id=".type"><span class="type-signature">(static) </span>type<span class="type-signature"> :string</span></h4>
-
-
-
-
-<div class="description">
-    The implementation name / type of the activity.This is required to look up the activity implementation which should execute the activity entity from memory.
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line59">line 59</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -316,7 +169,7 @@
             <td class="type">
             
                 
-<span class="param-type"><a href="IActivityEntity.html">IActivityEntity</a></span>
+<span class="param-type">IActivityEntity</span>
 
 
             
@@ -457,13 +310,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IActivity.html">IActivity</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-activity.module_activity.html">activity</a></li><li><a href="module-module.html">module</a></li></ul><h3>Classes</h3><ul><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li><li><a href="module-activity.module_activity-IActivityEntity.html">IActivityEntity</a></li><li><a href="module-module-IActivity.html">IActivity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 21:58:46 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 21:59:46 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

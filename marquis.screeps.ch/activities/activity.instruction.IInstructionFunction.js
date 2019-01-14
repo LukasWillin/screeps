@@ -32,6 +32,7 @@ const NotImplementedError = require('./error/NotImplementedError');
  *  the return value from another (called) instruction;
  * @interface
  * @augments Function
+ * @memberof module:activity/instruction
  * 
  * @example 
  * const instrFn = new IInstructionFunction((mem, scope, cache, call, err, ...args) => { 

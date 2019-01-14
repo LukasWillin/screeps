@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: MissingArgumentError</title>
+    <title>JSDoc: Class: AInstruction</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: MissingArgumentError</h1>
+    <h1 class="page-title">Class: AInstruction</h1>
 
     
 
@@ -28,9 +28,10 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>MissingArgumentError<span class="signature">(error)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature">(abstract) </span></span>
+            <span class="ancestors"><a href="module-activity_instruction.html">activity/instruction</a>.</span>AInstruction<span class="signature">(&hellip;instructionFunctions)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Thrown when a required argument is missing from a function/constructor call.</div>
+            <div class="class-description">Abstract implementation of IInstruction</div>
         
     
 </header>
@@ -45,7 +46,7 @@
     
 
     
-    <h4 class="name" id="MissingArgumentError"><span class="type-signature"></span>new MissingArgumentError<span class="signature">(error)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="AInstruction"><span class="type-signature">(abstract) </span>new AInstruction<span class="signature">(&hellip;instructionFunctions)</span><span class="type-signature"></span></h4>
     
 
     
@@ -73,6 +74,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -85,23 +88,33 @@
 
         <tr>
             
-                <td class="name"><code>error</code></td>
+                <td class="name"><code>instructionFunctions</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Error</span>
+<span class="param-type">IInstructionFunction</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
 
             
 
-            <td class="description last">Must be an error to preserve the original stack.</td>
+            <td class="description last">One or many ordered instruction functions.</td>
         </tr>
 
     
@@ -126,6 +139,13 @@
     
 
     
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>IInstruction</li>
+        
+    </ul></dd>
+    
 
     
 
@@ -142,7 +162,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="error_MissingArgumentError.js.html">error/MissingArgumentError.js</a>, <a href="error_MissingArgumentError.js.html#line7">line 7</a>
+        <a href="activity.instruction.AInstruction.js.html">activity.instruction.AInstruction.js</a>, <a href="activity.instruction.AInstruction.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -169,20 +189,14 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Single use instruction const instruction = new AInstruction(     // First instruction function (index:=0) receives the arguments of the caller.     new AInstructionFunction((mem, scope, cache, call, err, ...args) => {         scope.arg0 = args[0];         scope.arg1 = args[1];         call(SomeActivity.anotherInstruction, "any", "arg", {}, 8);     }),     new AInstructionFunction((mem, scope, cache, call, err, ...args) => {         if (err) return err;                   scope.returnValue = args[0];         scope.out = 1234;         return true;     }); ); // Multi use implementation class ConcreteInstruction extends AInstruction { } Object.defineProperties(ConcreteInstruction.prototype, {     "0": {          value: new AInstructionFunction((mem, scope, cache, call, err, ...args) => {             scope.arg0 = args[0];             scope.arg1 = args[1];             scope.out = "Calculated Result";             return true;         })     } }); const multiConcreteInstruction = new ConcreteInstruction();</code></pre>
+
+
 
     
     </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
-        
-
-
-    <ul>
-        <li>Error</li>
-    </ul>
-
 
     
 

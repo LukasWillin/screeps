@@ -1,9 +1,13 @@
-
+/**
+ * @module activity
+ */
+module;
 
 const NotImplementedError = require('./error/NotImplementedError');
 const IInstruction = require('./activity.instruction.IInstruction');
 const IInstructionFunction = require('./activity.instruction.IInstructionFunction');
 const IInstructionSet = require('./activity.instruction.IInstructionSet');
+const IActivityEntity = require('./activity.IActivityEntity');
 
 /**
  * An activity implements the logic to execute specific task(s).
@@ -16,7 +20,8 @@ const IInstructionSet = require('./activity.instruction.IInstructionSet');
  */
 class IActivity {
 
-    /** Initializes given cache object with required data to run a certain instruction.
+    /** 
+     * Initializes given cache object with required data to run a certain instruction.
      * The init cache is ran once before the first call to any instruction.
      * @param {IActivityEntity} activityEntity - The persisted activity entity from memory.
      * @param {IInstruction} nextInstruction - The instruction which will be called next. 
@@ -46,11 +51,14 @@ Object.defineProperties(IActivity, {
     },
     /**
      * The implementation name / type of the activity.
-     * This is required to look up the activity implementation which should execute the activity entity.
+     * This is required to look up the activity implementation which should 
+     * execute the activity entity from memory.
      * @type {string}
      * @memberof IActivity
      */
-    type: { value: "IActivity" }
+    type: { 
+        value: "IActivity"
+    }
 });
 
 module.exports = IActivity;

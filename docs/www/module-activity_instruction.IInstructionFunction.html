@@ -28,7 +28,8 @@
 
 <header>
     
-        <h2>IInstructionFunction</h2>
+        <h2>
+            <span class="ancestors"><a href="module-activity_instruction.html">activity/instruction</a>.</span>IInstructionFunction</h2>
         
             <div class="class-description">Function within an Instruction.An instruction function expects a certain signature     (mem, scope, cache, call, err, ...args)An instruction function can return values by assigning property 'out' to the scope AND return a truthy value. Like so you can actually return undefined values and tell that the instruction set should end now     {... scope.out = 1234; return true; ...}An instruction function can throw an error at any time     {... throw new Error("Some error"); ...}When an instruction function receives an error it should either     Not fix it and return falsy     -> The scheduler will then drop the instruction from the stack and pass it to the         next instruction on te stack which can then do the same until the stack         becomes empty which means that the scheduler will assume the activity is done for         and tells the kernel to free the ressources.     { if (err) return; ...} or  Fix the error and mark it as 'handled'     { if (err) { "Do smth about it"; err.handled = true; } ...} or  Do smth against it but have it being passed further down.     { if (err) { "Do smth about it but not marking it handled"; } ...}Only the first instruction function will receive arguments from the caller.all instruction functions later will at max receive one argument which would be the return value from another (called) instruction;</div>
         
@@ -72,7 +73,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="activity.instruction.IInstructionFunction.js.html">activity.instruction.IInstructionFunction.js</a>, <a href="activity.instruction.IInstructionFunction.js.html#line47">line 47</a>
+        <a href="activity.instruction.IInstructionFunction.js.html">activity.instruction.IInstructionFunction.js</a>, <a href="activity.instruction.IInstructionFunction.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -394,7 +395,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="activity.instruction.IInstructionFunction.js.html">activity.instruction.IInstructionFunction.js</a>, <a href="activity.instruction.IInstructionFunction.js.html#line63">line 63</a>
+        <a href="activity.instruction.IInstructionFunction.js.html">activity.instruction.IInstructionFunction.js</a>, <a href="activity.instruction.IInstructionFunction.js.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -438,13 +439,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-activity.html">activity</a></li><li><a href="module-activity_instruction.html">activity/instruction</a></li></ul><h3>Classes</h3><ul><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li><li><a href="module-activity.IActivityEntity.html">IActivityEntity</a></li><li><a href="module-activity.IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="module-activity_instruction.IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="module-activity_instruction-IInstruction.html">IInstruction</a></li><li><a href="module-activity-IActivity.html">IActivity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-activity.html">activity</a></li><li><a href="module-activity_instruction.html">activity/instruction</a></li></ul><h3>Classes</h3><ul><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="module-activity_instruction.AInstruction.html">AInstruction</a></li><li><a href="module-activity_instruction.AInstructionFunction.html">AInstructionFunction</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="module-activity.IActivityEntity.html">IActivityEntity</a></li><li><a href="module-activity.IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="module-activity_instruction.IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="module-activity_instruction.IInstructionFunction.html">IInstructionFunction</a></li><li><a href="module-activity_instruction.IInstructionSet.html">IInstructionSet</a></li><li><a href="module-activity_instruction-IInstruction.html">IInstruction</a></li><li><a href="module-activity-IActivity.html">IActivity</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 22:10:22 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 22:13:21 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

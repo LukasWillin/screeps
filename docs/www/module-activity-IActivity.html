@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Interface: IActivity</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Interface: IActivity</h1>
 
     
 
@@ -28,7 +28,10 @@
 
 <header>
     
-        <h2></h2>
+        <h2>
+            <span class="ancestors"><a href="module-activity.html">activity</a>~</span>IActivity</h2>
+        
+            <div class="class-description">An activity implements the logic to execute specific task(s).The activity class never creates instances but implements the static instructionsto execute upon an activity entity.</div>
         
     
 </header>
@@ -54,7 +57,12 @@
     
 
     
-
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li>IInstructionSet</li>
+        
+    </ul></dd>
     
 
     
@@ -67,6 +75,13 @@
 
     
 
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line21">line 21</a>
+    </li></ul></dd>
     
 
     
@@ -94,17 +109,25 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         
             
-<h4 class="name" id="InstructionState"><span class="type-signature">(constant) </span>InstructionState<span class="type-signature"></span></h4>
 
+    
+
+    
+    <h4 class="name" id=".initCache"><span class="type-signature">(static) </span>initCache<span class="signature">(activityEntity, nextInstruction, cache)</span><span class="type-signature"></span></h4>
+    
+
+    
 
 
 
 <div class="description">
-    An instruction ends when it returns truthy or it reached the end. The output valuemust be assigned to the out variable within the scope.
+    Initializes given cache object with required data to run a certain instruction.The init cache is ran once before the first call to any instruction.
 </div>
 
 
@@ -113,11 +136,12 @@
 
 
 
-    <h5 class="subsection-title">Properties:</h5>
 
+
+    <h5>Parameters:</h5>
     
 
-<table class="props">
+<table class="params">
     <thead>
     <tr>
         
@@ -139,13 +163,13 @@
 
         <tr>
             
-                <td class="name"><code>fns</code></td>
+                <td class="name"><code>activityEntity</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;function()></span>
+<span class="param-type">IActivityEntity</span>
 
 
             
@@ -155,20 +179,20 @@
 
             
 
-            <td class="description last">An ordered instructions list.</td>
+            <td class="description last">The persisted activity entity from memory.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>nextFn</code></td>
+                <td class="name"><code>nextInstruction</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">int</span>
+<span class="param-type">IInstruction</span>
 
 
             
@@ -178,14 +202,14 @@
 
             
 
-            <td class="description last">Next instruction within the instruction set.</td>
+            <td class="description last">The instruction which will be called next.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>scope</code></td>
+                <td class="name"><code>cache</code></td>
             
 
             <td class="type">
@@ -201,83 +225,14 @@
 
             
 
-            <td class="description last">scope of the instruction set.
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>out</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The value returned should be assigned to this property.     Everything will be accepted as an output variable. Even 'undefined'.</td>
+            <td class="description last">An empty object to initialize.     This object is a shortcut to 'activityInstance.cache'.</td>
         </tr>
 
     
     </tbody>
 </table>
 
-            </td>
-        </tr>
 
-    
-
-        <tr>
-            
-                <td class="name"><code>err</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Error</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The last error which occured.     If the error is not assigned a value 'handled = true' the error will be passed to the     the instruction will be ended if the error is not marked as handled. And then passed     to the previous instruction and so forth.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -311,7 +266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.scheduler.IScheduler.js.html">kernel.scheduler.IScheduler.js</a>, <a href="kernel.scheduler.IScheduler.js.html#line65">line 65</a>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line31">line 31</a>
     </li></ul></dd>
     
 
@@ -326,15 +281,20 @@
 
 
 
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// First set1 calls set2 which at some point returns a value// The value unless its undefined will be passed as argument// to the next instruction in set1 (which is #1)InstrSet1#0 -> InstrSet2:returns 2 -> InstrSet1#1</code></pre>
+
+
+
+
+
+
+
+
+
+
 
 
 
         
-    
-
     
 
     

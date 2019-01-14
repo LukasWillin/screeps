@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Interface: IInstruction</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Interface: IInstruction</h1>
 
     
 
@@ -28,7 +28,10 @@
 
 <header>
     
-        <h2></h2>
+        <h2>
+            <span class="ancestors"><a href="module-activity_instruction.html">activity/instruction</a>~</span>IInstruction</h2>
+        
+            <div class="class-description">An instruction is an ordered list of instruction functions.</div>
         
     
 </header>
@@ -68,6 +71,11 @@
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.instruction.IInstruction.js.html">activity.instruction.IInstruction.js</a>, <a href="activity.instruction.IInstruction.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
 
     
 
@@ -78,10 +86,24 @@
 
 
         
+            <h3>Example</h3>
+            
+    <pre class="prettyprint"><code>const instruction = new IInstruction(     // First instruction function (index:=0) receives the arguments of the caller.     new IInstructionFunction((mem, scope, cache, call, err, ...args) => {         scope.arg0 = args[0];         scope.arg1 = args[1];         call(SomeActivity.anotherInstruction, "any", "arg", {}, 8);     }),     // Later instruction function may receive return results from a previously called instruction.     // Note that invocations of other instructions through 'call' will always require a split of an instruction     // function into two.     new IInstructionFunction((mem, scope, cache, call, err, ...args) => {         if (err) return err;                   scope.returnValue = args[0];         scope.out = 1234;         return true;     }); );</code></pre>
+
+        
     
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>Array.&lt;IInstructionFunction></li>
+    </ul>
+
 
     
 
@@ -94,30 +116,37 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         
             
-<h4 class="name" id="InstructionState"><span class="type-signature">(constant) </span>InstructionState<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    An instruction ends when it returns truthy or it reached the end. The output valuemust be assigned to the out variable within the scope.
-</div>
-
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
 
     
 
-<table class="props">
+    
+    <h4 class="name" id="initCache"><span class="type-signature"></span>initCache<span class="signature">(mem, cache, scope, nextFnIndex)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
     <thead>
     <tr>
         
@@ -139,13 +168,13 @@
 
         <tr>
             
-                <td class="name"><code>fns</code></td>
+                <td class="name"><code>mem</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;function()></span>
+<span class="param-type">IActivityEntity</span>
 
 
             
@@ -155,20 +184,20 @@
 
             
 
-            <td class="description last">An ordered instructions list.</td>
+            <td class="description last">The activity entity.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>nextFn</code></td>
+                <td class="name"><code>cache</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">int</span>
+<span class="param-type">Object</span>
 
 
             
@@ -178,7 +207,7 @@
 
             
 
-            <td class="description last">Next instruction within the instruction set.</td>
+            <td class="description last">An empty object to use as instruction function cache.     This cache should be initialized. Returned values are ignored.</td>
         </tr>
 
     
@@ -201,68 +230,20 @@
 
             
 
-            <td class="description last">scope of the instruction set.
-                <h6>Properties</h6>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>out</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">any</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The value returned should be assigned to this property.     Everything will be accepted as an output variable. Even 'undefined'.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
+            <td class="description last">Persisted Instruction scope</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>err</code></td>
+                <td class="name"><code>nextFnIndex</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Error</span>
+<span class="param-type">int</span>
 
 
             
@@ -272,12 +253,14 @@
 
             
 
-            <td class="description last">The last error which occured.     If the error is not assigned a value 'handled = true' the error will be passed to the     the instruction will be ended if the error is not marked as handled. And then passed     to the previous instruction and so forth.</td>
+            <td class="description last">The instruction function which will be executed.     Can be used to prevent unnecessary initialization when instruction is resumed and some     Data isnt be needed.</td>
         </tr>
 
     
     </tbody>
 </table>
+
+
 
 
 
@@ -311,7 +294,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.scheduler.IScheduler.js.html">kernel.scheduler.IScheduler.js</a>, <a href="kernel.scheduler.IScheduler.js.html#line65">line 65</a>
+        <a href="activity.instruction.IInstruction.js.html">activity.instruction.IInstruction.js</a>, <a href="activity.instruction.IInstruction.js.html#line49">line 49</a>
     </li></ul></dd>
     
 
@@ -326,15 +309,20 @@
 
 
 
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// First set1 calls set2 which at some point returns a value// The value unless its undefined will be passed as argument// to the next instruction in set1 (which is #1)InstrSet1#0 -> InstrSet2:returns 2 -> InstrSet1#1</code></pre>
+
+
+
+
+
+
+
+
+
+
 
 
 
         
-    
-
     
 
     

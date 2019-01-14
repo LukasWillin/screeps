@@ -5,7 +5,10 @@
  * An instruction ends when it returns truthy or it reached the end. The output value
  * must be assigned to the out variable within the scope.
  * @interface
- * @property {string} instructionName - An ordered instructions list.
+ * @memberof module:activity/instruction
+ * 
+ * @property {string} activityType - The name / type of the instruction implementing the instruction.
+ * @property {string} instructionName - Name of the instruction.
  * @property {int} nextFn - Next instruction within the instruction (list).
  * @property {Array<any>} args - The arguments to be passed to the next instruction function.
  * @property {Object} scope - scope of the instruction set.

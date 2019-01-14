@@ -11,6 +11,7 @@ const getProto = Object.getPrototypeOf;
  * 
  * @abstract
  * @implements {IInstruction}
+ * @memberof module:activity/instruction
  * 
  * @example
  *  // Single use instruction

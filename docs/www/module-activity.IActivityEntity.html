@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Interface: IActivityEntity</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Interface: IActivityEntity</h1>
 
     
 
@@ -28,7 +28,10 @@
 
 <header>
     
-        <h2></h2>
+        <h2>
+            <span class="ancestors"><a href="module-activity.html">activity</a>.</span>IActivityEntity</h2>
+        
+            <div class="class-description">The activity entity contains all info about an active activity.Note that the only information which should be accessible to instruction functionsis the memory (mem) property.</div>
         
     
 </header>
@@ -39,78 +42,6 @@
         
 
         
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="InstructionState"><span class="type-signature">(constant) </span>InstructionState<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    An instruction ends when it returns truthy or it reached the end. The output valuemust be assigned to the out variable within the scope.
-</div>
-
-
-
-
-
 
 
     <h5 class="subsection-title">Properties:</h5>
@@ -139,13 +70,13 @@
 
         <tr>
             
-                <td class="name"><code>fns</code></td>
+                <td class="name"><code>type</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;function()></span>
+<span class="param-type">string</span>
 
 
             
@@ -155,37 +86,14 @@
 
             
 
-            <td class="description last">An ordered instructions list.</td>
+            <td class="description last">Registered type (class) of the activity.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>nextFn</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">int</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Next instruction within the instruction set.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>scope</code></td>
+                <td class="name"><code>mem</code></td>
             
 
             <td class="type">
@@ -201,7 +109,7 @@
 
             
 
-            <td class="description last">scope of the instruction set.
+            <td class="description last">The memory of the activity. Which is also served as the memory (mem)     argument for instruction functions.
                 <h6>Properties</h6>
 
 <table class="props">
@@ -226,13 +134,13 @@
 
         <tr>
             
-                <td class="name"><code>out</code></td>
+                <td class="name"><code>cache</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">any</span>
+<span class="param-type">Object</span>
 
 
             
@@ -242,7 +150,7 @@
 
             
 
-            <td class="description last">The value returned should be assigned to this property.     Everything will be accepted as an output variable. Even 'undefined'.</td>
+            <td class="description last">A cache object which is made available on the memory object.     This object must be removed before it is stored in memory or be marked as not 'enumerable'.</td>
         </tr>
 
     
@@ -256,13 +164,13 @@
 
         <tr>
             
-                <td class="name"><code>err</code></td>
+                <td class="name"><code>stats</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Error</span>
+<span class="param-type">Object</span>
 
 
             
@@ -272,7 +180,30 @@
 
             
 
-            <td class="description last">The last error which occured.     If the error is not assigned a value 'handled = true' the error will be passed to the     the instruction will be ended if the error is not marked as handled. And then passed     to the previous instruction and so forth.</td>
+            <td class="description last">Statistics about its resource usage.     Here the kernel stores and tracks the ressource usage of this activity</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>execStack</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;IInstructionExecutionState></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The execution stack in order to be able to resume it later.</td>
         </tr>
 
     
@@ -311,7 +242,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.scheduler.IScheduler.js.html">kernel.scheduler.IScheduler.js</a>, <a href="kernel.scheduler.IScheduler.js.html#line65">line 65</a>
+        <a href="activity.IActivityEntity.js.html">activity.IActivityEntity.js</a>, <a href="activity.IActivityEntity.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -323,16 +254,22 @@
 </dl>
 
 
-
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>// First set1 calls set2 which at some point returns a value// The value unless its undefined will be passed as argument// to the next instruction in set1 (which is #1)InstrSet1#0 -> InstrSet2:returns 2 -> InstrSet1#1</code></pre>
-
-
-
         
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
     
 
     
