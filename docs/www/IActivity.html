@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: IKernel</title>
+    <title>JSDoc: Interface: IActivity</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: IKernel</h1>
+    <h1 class="page-title">Interface: IActivity</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>IKernel<span class="signature">(scheduler)</span><span class="type-signature"></span></h2>
+        <h2>IActivity</h2>
         
-            <div class="class-description">The activator is the kernel logik.The root for all executions.</div>
+            <div class="class-description">An activity implements the logic to execute specific task(s).The activity class never creates instances but implements the static instructionsto execute upon an activity entity.</div>
         
     
 </header>
@@ -40,81 +40,7 @@
     
         
 
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="IKernel"><span class="type-signature"></span>new IKernel<span class="signature">(scheduler)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Constructs an activator instance.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
         
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>scheduler</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="IScheduler.html">IScheduler</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The scheduler to use.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
 
 
 <dl class="details">
@@ -129,6 +55,13 @@
 
     
 
+    
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        
+            <li><a href="IInstructionSet.html">IInstructionSet</a></li>
+        
+    </ul></dd>
     
 
     
@@ -146,7 +79,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.IKernel.js.html">kernel.IKernel.js</a>, <a href="kernel.IKernel.js.html#line12">line 12</a>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line17">line 17</a>
     </li></ul></dd>
     
 
@@ -158,22 +91,7 @@
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     
     </div>
 
@@ -190,6 +108,154 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".run"><span class="type-signature">(static) </span>run<span class="type-signature"> :<a href="IInstruction.html">IInstruction</a></span></h4>
+
+
+
+
+<div class="description">
+    An activity must at least implement one instruction to be run by the schedulerwith the property name 'run'. This is the root instruction at which theexecution starts or resumes from.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><a href="IInstruction.html">IInstruction</a></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".type"><span class="type-signature">(static) </span>type<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    The implementation name / type of the activity.This is required to look up the activity implementation which should execute the activity entity.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -200,7 +266,7 @@
     
 
     
-    <h4 class="name" id="call"><span class="type-signature"></span>call<span class="signature">(thisArg, instruction, &hellip;args)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".initCache"><span class="type-signature">(static) </span>initCache<span class="signature">(activityEntity, nextInstruction, cache)</span><span class="type-signature"></span></h4>
     
 
     
@@ -208,7 +274,7 @@
 
 
 <div class="description">
-    This function is passed to the current activity instruction function.
+    Initializes given cache object with required data to run a certain instruction.The init cache is ran once before the first call to any instruction.
 </div>
 
 
@@ -232,8 +298,6 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
-        
 
         
 
@@ -246,38 +310,30 @@
 
         <tr>
             
-                <td class="name"><code>thisArg</code></td>
+                <td class="name"><code>activityEntity</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type"><a href="IActivityEntity.html">IActivityEntity</a></span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Any object serving as this.</td>
+            <td class="description last">The persisted activity entity from memory.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>instruction</code></td>
+                <td class="name"><code>nextInstruction</code></td>
             
 
             <td class="type">
@@ -290,51 +346,33 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">Any instruction.</td>
+            <td class="description last">The instruction which will be called next.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>args</code></td>
+                <td class="name"><code>cache</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">any</span>
+<span class="param-type">Object</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                    &lt;repeatable><br>
-                
-                </td>
-            
 
             
 
-            <td class="description last">(optional) - Caller arguments.</td>
+            <td class="description last">An empty object to initialize.     This object is a shortcut to 'activityInstance.cache'.</td>
         </tr>
 
     
@@ -375,7 +413,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.IKernel.js.html">kernel.IKernel.js</a>, <a href="kernel.IKernel.js.html#line29">line 29</a>
+        <a href="activity.IActivity.js.html">activity.IActivity.js</a>, <a href="activity.IActivity.js.html#line26">line 26</a>
     </li></ul></dd>
     
 

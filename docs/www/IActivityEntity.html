@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: IActivityEntity</title>
+    <title>JSDoc: Interface: IActivityEntity</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: IActivityEntity</h1>
+    <h1 class="page-title">Interface: IActivityEntity</h1>
 
     
 
@@ -28,7 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>IActivityEntity<span class="signature">(activityType, state, usageStats, executionStack)</span><span class="type-signature"></span></h2>
+        <h2>IActivityEntity</h2>
+        
+            <div class="class-description">The activity entity contains all info about an active activity.Note that the only information which should be accessible to instruction functionsis the memory (mem) property.</div>
         
     
 </header>
@@ -38,28 +40,14 @@
     
         
 
-    
+        
+
+
+    <h5 class="subsection-title">Properties:</h5>
 
     
-    <h4 class="name" id="IActivityEntity"><span class="type-signature"></span>new IActivityEntity<span class="signature">(activityType, state, usageStats, executionStack)</span><span class="type-signature"></span></h4>
-    
 
-    
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -81,7 +69,7 @@
 
         <tr>
             
-                <td class="name"><code>activityType</code></td>
+                <td class="name"><code>type</code></td>
             
 
             <td class="type">
@@ -97,14 +85,14 @@
 
             
 
-            <td class="description last">Registered type of the activity.</td>
+            <td class="description last">Registered type (class) of the activity.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>state</code></td>
+                <td class="name"><code>mem</code></td>
             
 
             <td class="type">
@@ -120,14 +108,14 @@
 
             
 
-            <td class="description last">The memory of the activity.</td>
+            <td class="description last">The memory of the activity. Which is also served as the this (mem)     argument for instruction functions.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>usageStats</code></td>
+                <td class="name"><code>stats</code></td>
             
 
             <td class="type">
@@ -143,20 +131,20 @@
 
             
 
-            <td class="description last">Statisitcs about its resource usage.</td>
+            <td class="description last">Statistics about its resource usage.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>executionStack</code></td>
+                <td class="name"><code>execStack</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;Object></span>
+<span class="param-type">Array.&lt;<a href="IInstructionExecutionState.html">IInstructionExecutionState</a>></span>
 
 
             
@@ -172,8 +160,6 @@
     
     </tbody>
 </table>
-
-
 
 
 
@@ -207,7 +193,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="activity.IActivityEntity.js.html">activity.IActivityEntity.js</a>, <a href="activity.IActivityEntity.js.html#line4">line 4</a>
+        <a href="activity.IActivityEntity.js.html">activity.IActivityEntity.js</a>, <a href="activity.IActivityEntity.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -219,22 +205,7 @@
 </dl>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     
     </div>
 
@@ -267,13 +238,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AActivity.html">AActivity</a></li><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IActivity.html">IActivity</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 13 2019 17:38:23 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 00:47:56 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

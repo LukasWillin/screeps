@@ -30,7 +30,7 @@
     
         <h2>IInstructionFunction</h2>
         
-            <div class="class-description">Function within an Instruction.An instruction function expects a certain signature     (ths, scope, cache, call, err, ...args)An instruction function can return values by assigning property 'out' to the scope AND return a truthy value. Like so you can actually return undefined values and tell that the instruction set should end now     {... scope.out = 1234; return true; ...}An instruction function can throw an error at any time     {... throw new Error("Some error"); ...}When an instruction function receives an error it should either     Not fix it and return falsy     -> The scheduler will then drop the instruction from the stack and pass it to the         next instruction on te stack which can then do the same until the stack         becomes empty which means that the scheduler will assume the activity is done for         and tells the kernel to free the ressources.     { if (err) return; ...} or  Fix the error and mark it as 'handled'     { if (err) { "Do smth about it"; err.handled = true; } ...} or  Do smth against it but have it being passed further down.     { if (err) { "Do smth about it but not marking it handled"; } ...}Only the first instruction function will receive arguments from the caller.all instruction functions later will at max receive one argument which would be the return value from another (called) instruction;</div>
+            <div class="class-description">Function within an Instruction.An instruction function expects a certain signature     (mem, scope, cache, call, err, ...args)An instruction function can return values by assigning property 'out' to the scope AND return a truthy value. Like so you can actually return undefined values and tell that the instruction set should end now     {... scope.out = 1234; return true; ...}An instruction function can throw an error at any time     {... throw new Error("Some error"); ...}When an instruction function receives an error it should either     Not fix it and return falsy     -> The scheduler will then drop the instruction from the stack and pass it to the         next instruction on te stack which can then do the same until the stack         becomes empty which means that the scheduler will assume the activity is done for         and tells the kernel to free the ressources.     { if (err) return; ...} or  Fix the error and mark it as 'handled'     { if (err) { "Do smth about it"; err.handled = true; } ...} or  Do smth against it but have it being passed further down.     { if (err) { "Do smth about it but not marking it handled"; } ...}Only the first instruction function will receive arguments from the caller.all instruction functions later will at max receive one argument which would be the return value from another (called) instruction;</div>
         
     
 </header>
@@ -87,7 +87,7 @@
         
             <h3>Example</h3>
             
-    <pre class="prettyprint"><code>const instrFn = new IInstructionFunction((ths, scope, cache, call, err, ...args) => {      if (err) return;     if (args.length === 0) ; // No return value or arguments were received     const returnValue = args[0]; // Might be undefined but you might not know for sure if it was empty or actually undefined     call(ths, ths.someOtherInstr, "arg1", 4, ["whatever"], { also: "this is ok"});     scope.out = 1234;     throw new Error("Error before returning properly");     return true;});</code></pre>
+    <pre class="prettyprint"><code>const instrFn = new IInstructionFunction((mem, scope, cache, call, err, ...args) => {      if (err) return;     if (args.length === 0) ; // No return value or arguments were received     const returnValue = args[0]; // Might be undefined but you might not know for sure if it was empty or actually undefined     call(mem, mem.someOtherInstr, "arg1", 4, ["whatever"], { also: "this is ok"});     scope.out = 1234;     throw new Error("Error before returning properly");     return true;});</code></pre>
 
         
     
@@ -127,7 +127,7 @@
     
 
     
-    <h4 class="name" id="exec"><span class="type-signature"></span>exec<span class="signature">(ths, scope, cache, call, err, &hellip;args)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="exec"><span class="type-signature"></span>exec<span class="signature">(mem, scope, cache, call, err, &hellip;args)</span><span class="type-signature"></span></h4>
     
 
     
@@ -169,7 +169,7 @@
 
         <tr>
             
-                <td class="name"><code>ths</code></td>
+                <td class="name"><code>mem</code></td>
             
 
             <td class="type">
@@ -286,7 +286,7 @@
 
             
 
-            <td class="description last">A function to be used to call other instructions.     Its signature is (ths, instructionName, ...args).</td>
+            <td class="description last">A function to be used to call other instructions.     Its signature is (mem, instructionName, ...args).</td>
         </tr>
 
     
@@ -438,13 +438,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AActivity.html">AActivity</a></li><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AInstruction.html">AInstruction</a></li><li><a href="AInstructionFunction.html">AInstructionFunction</a></li><li><a href="IActivityExecutionStack.html">IActivityExecutionStack</a></li><li><a href="IKernel.html">IKernel</a></li><li><a href="IllegalArgumentError.html">IllegalArgumentError</a></li><li><a href="InstructionFunction.html">InstructionFunction</a></li><li><a href="InternalStateError.html">InternalStateError</a></li><li><a href="MissingArgumentError.html">MissingArgumentError</a></li><li><a href="NotImplementedError.html">NotImplementedError</a></li></ul><h3>Interfaces</h3><ul><li><a href="IActivity.html">IActivity</a></li><li><a href="IActivityEntity.html">IActivityEntity</a></li><li><a href="IInstruction.html">IInstruction</a></li><li><a href="IInstructionExecutionState.html">IInstructionExecutionState</a></li><li><a href="IInstructionFunction.html">IInstructionFunction</a></li><li><a href="IInstructionSet.html">IInstructionSet</a></li></ul><h3>Global</h3><ul><li><a href="global.html#InstructionState">InstructionState</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 13 2019 17:38:23 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 14 2019 00:47:56 GMT+0100 (Central European Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -17,12 +17,12 @@ const getProto = Object.getPrototypeOf;
  * 
  * @example
  * // Single use instanciation :
- *  const singleInstrFn = new AInstructionFunction(function (ths, scope, cache, call, err, ...args) {
+ *  const singleInstrFn = new AInstructionFunction(function (mem, scope, cache, call, err, ...args) {
  *      console.log('Do whatever you only need once.');
  *  });
  * // or when youwant to reuse it
  *  class MultiInstructionFunction extends AInstructionFunction {
- *      exec (ths, scope, cache, call, err, ...args) {
+ *      exec (mem, scope, cache, call, err, ...args) {
  *          console.log('Do whatever else you might need multiple times.');
  *      }
  *  }
@@ -34,8 +34,8 @@ class AInstructionFunction extends Function {
      * @param {Function} [fn] - Optional concrete implementation of exec for one time usage.
      */
     constructor(fn) {
-        const instrFn = function (ths, scope, cache, call, err, ...args) {
-            return instrFn.exec(ths, scope, cache, call, err, ...args);
+        const instrFn = function (mem, scope, cache, call, err, ...args) {
+            return instrFn.exec(mem, scope, cache, call, err, ...args);
         };
 
         if (_.isFunction(fn)) {
@@ -50,7 +50,7 @@ class AInstructionFunction extends Function {
         return instrFn;
     }
 
-    exec(ths, scope, cache, call, err, ...args) {
+    exec(mem, scope, cache, call, err, ...args) {
         throw new NotImplementedError(Error('Abstract implementation of AInstructionFunction#exec.'));
     }
 }

@@ -33,11 +33,11 @@ module.exports = IScheduler;
  * @example 
  * // Instruction function (with args)
  * [
- *  function (ths, scope, call, err, ...args) {
+ *  function (mem, scope, call, err, ...args) {
  *      scope.id = 1234;
- *      call(ths, ths.someOtherInstructionSet, args); // Call another instruction set whos result is passed as an argument to instruction #1 if set true.
+ *      call(mem, mem.someOtherInstructionSet, args); // Call another instruction set whos result is passed as an argument to instruction #1 if set true.
  *  },
- *  function endInstrFn(ths, scope, call, err, ...args) {
+ *  function endInstrFn(mem, scope, call, err, ...args) {
  *      return args[0];
  *  }
  * ]

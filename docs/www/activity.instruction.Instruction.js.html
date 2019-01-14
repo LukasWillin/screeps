@@ -41,12 +41,12 @@ const IInstruction = require('./activity.instruction.IInstruction');
  *  // Single use instruction
  *  const instruction = new AInstruction(
  *      // First instruction function (index:=0) receives the arguments of the caller.
- *      new AInstructionFunction((ths, scope, cache, call, err, ...args) => {
+ *      new AInstructionFunction((mem, scope, cache, call, err, ...args) => {
  *          scope.arg0 = args[0];
  *          scope.arg1 = args[1];
  *          call(SomeActivity.anotherInstruction, "any", "arg", {}, 8);
  *      }),
- *      new AInstructionFunction((ths, scope, cache, call, err, ...args) => {
+ *      new AInstructionFunction((mem, scope, cache, call, err, ...args) => {
  *          if (err) return err;
  *           
  *          scope.returnValue = args[0];
@@ -59,7 +59,7 @@ const IInstruction = require('./activity.instruction.IInstruction');
  *  class ConcreteInstruction extends AInstruction { }
  *  Object.defineProperties(ConcreteInstruction.prototype, {
  *      "0": { 
- *          value: new AInstructionFunction((ths, scope, cache, call, err, ...args) => {
+ *          value: new AInstructionFunction((mem, scope, cache, call, err, ...args) => {
  *              scope.arg0 = args[0];
  *              scope.arg1 = args[1];
  *              scope.out = "Calculated Result";
