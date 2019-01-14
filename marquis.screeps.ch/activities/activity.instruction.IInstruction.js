@@ -1,9 +1,4 @@
 
-/**
- * @module activity/instruction
- */
-module;
-
 const IInstructionFunction = require('./activity.instruction.IInstructionFunction');
 
 /**
@@ -11,6 +6,7 @@ const IInstructionFunction = require('./activity.instruction.IInstructionFunctio
  * 
  * @interface
  * @augments Array<IInstructionFunction>
+ * @memberof module:activity/instruction
  * 
  * @example
  *  const instruction = new IInstruction(
