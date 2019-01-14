@@ -1,0 +1,5 @@
+
+/**
+ * @module kernel/scheduler
+ */
+module;

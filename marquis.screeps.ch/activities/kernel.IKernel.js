@@ -8,6 +8,9 @@ const IScheduler = require('./activity.IScheduler');
 /**
  * The activator is the kernel logik.
  * The root for all executions.
+ * 
+ * @interface
+ * @memberof module:kernel
  */
 class IKernel {
     /**

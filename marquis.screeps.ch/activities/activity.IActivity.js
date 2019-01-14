@@ -1,7 +1,3 @@
-/**
- * @module activity
- */
-module;
 
 const NotImplementedError = require('./error/NotImplementedError');
 const IInstruction = require('./activity.instruction.IInstruction');
@@ -16,6 +12,7 @@ const IActivityEntity = require('./activity.IActivityEntity');
  * to execute upon an activity entity.
  * 
  * @interface
+ * @memberof module:activity
  * @implements {IInstructionSet}
  */
 class IActivity {

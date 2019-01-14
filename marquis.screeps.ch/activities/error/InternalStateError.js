@@ -2,11 +2,11 @@
 /**
  * Thrown when an internal state error is encountered.
  *
- * @extends {Error}
+ * @augments Error
+ * @memberof module:error
  */
 class InternalStateError extends Error {
     /**
-     * 
      * @param {Error} error - Must be an error to preserve the original stack.
      */
     constructor(error) {
@@ -15,3 +15,5 @@ class InternalStateError extends Error {
         this.name = 'InternalStateError';
     }
 };
+
+module.exports = InternalStateError;

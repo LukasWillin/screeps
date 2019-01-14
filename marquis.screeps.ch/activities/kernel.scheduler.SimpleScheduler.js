@@ -1,8 +1,13 @@
 
-const IActivity = require('./activity.IActivity');
-const IScheduler = require('./activity.IScheduler');
 
-class Scheduler extends IScheduler {
+const IActivity = require('./activity.IActivity');
+const IScheduler = require('./kernel.scheduler.IScheduler');
+
+/**
+ * @implements {IScheduler}
+ * @memberof module:kernel/scheduler
+ */
+class SimpleScheduler {
 
 	static run(schedulingCycle) {
         if (Game.time % this.memory.schedulingCycle === 0) {
@@ -76,4 +81,4 @@ class Scheduler extends IScheduler {
 Scheduler.className = 'ActivityScheduler';
 Scheduler.memory = MemoryUtil.get(ActivityScheduler.className);
 
-module.exports = Scheduler;
+module.exports = SimpleScheduler;
