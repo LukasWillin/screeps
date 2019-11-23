@@ -1,0 +1,28 @@
+{
+  "name": "screeps-kernel",
+  "version": "1.0.0",
+  "description": "A kernel for screeps!",
+  "main": "marquis.screeps.ch",
+  "dependencies": {
+    "shortid": "^2.2.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukasWillin/screeps.git"
+  },
+  "keywords": [
+    "kernel",
+    "scheduler",
+    "screeps"
+  ],
+  "author": "LukasWillin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LukasWillin/screeps/issues"
+  },
+  "homepage": "https://github.com/LukasWillin/screeps#readme"
+}

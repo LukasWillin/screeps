@@ -1,14 +1,15 @@
-
 /**
  * Thrown when an internal state error is encountered.
  *
- * @extends {Error}
- *
- * @param {string} message - A message.
+ * @param {Error} error - An error to extend.
  */
-class InternalStateError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'InternalStateError';
+class InternalStateError
+{
+    constructor(error)
+    {
+        error.name = 'InternalStateError';
+        return error;
     }
-};
+}
+
+module.exports = InternalStateError;

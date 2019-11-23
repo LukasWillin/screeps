@@ -1,5 +1,8 @@
+/* eslint-disable no-inner-declarations */
+/* eslint-disable no-unused-vars */
 
-const isFunction = (function() {
+const isFunction = (function() 
+{
     /**
      * Lodash (Custom Build) <https://lodash.com/>
      * Build: `lodash modularize exports="npm" -o ./`
@@ -21,53 +24,67 @@ const isFunction = (function() {
     var hasOwnProperty = objectProto.hasOwnProperty;
     var nativeObjectToString = objectProto.toString;
     var Symbol = root.Symbol, symToStringTag = Symbol ? Symbol.toStringTag : undefined;
-    function baseGetTag(value) {
-        if (value == null) {
+    function baseGetTag(value) 
+    {
+        if(value == null) 
+
             return value === undefined ? undefinedTag : nullTag;
-        }
-        return (symToStringTag && symToStringTag in Object(value))
+        
+        return(symToStringTag && symToStringTag in Object(value))
             ? getRawTag(value)
             : objectToString(value);
     }
-    function getRawTag(value) {
+    function getRawTag(value) 
+    {
         var isOwn = hasOwnProperty.call(value, symToStringTag),
             tag = value[symToStringTag];
 
-        try {
+        try
+        {
             value[symToStringTag] = undefined;
             var unmasked = true;
-        } catch (e) { }
+        }
+        catch(e) { }
 
         var result = nativeObjectToString.call(value);
-        if (unmasked) {
-            if (isOwn) {
+        if(unmasked) 
+
+            if(isOwn) 
+            {
                 value[symToStringTag] = tag;
-            } else {
+            }
+            else
+            {
                 delete value[symToStringTag];
             }
-        }
+        
         return result;
     }
-    function objectToString(value) {
+    function objectToString(value) 
+    {
         return nativeObjectToString.call(value);
     }
-    function __isFunction(value) {
-        if (!__isObject(value)) {
+    function __isFunction(value) 
+    {
+        if(!__isObject(value)) 
+
             return false;
-        }
+        
         // The use of `Object#toString` avoids issues with the `typeof` operator
         // in Safari 9 which returns 'object' for typed arrays and other constructors.
         var tag = baseGetTag(value);
         return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
     }
-    function __isObject(value) {
+    function __isObject(value) 
+    {
         var type = typeof value;
         return value != null && (type == 'object' || type == 'function');
     }
     return __isFunction;
 })();
 
-const isString = (function () {
+const isString = (function() 
+{
     /**
      * lodash 4.0.1 (Custom Build) <https://lodash.com/>
      * Build: `lodash modularize exports="npm" -o ./`
@@ -80,53 +97,63 @@ const isString = (function () {
     var objectProto = Object.prototype;
     var objectToString = objectProto.toString;
     var isArray = Array.isArray;
-    function isObjectLike(value) {
-        return !!value && typeof value == 'object';
+    function isObjectLike(value) 
+    {
+        return!!value && typeof value == 'object';
     }
-    function __isString(value) {
+    function __isString(value) 
+    {
         return typeof value == 'string' ||
             (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
     }
     return __isString;
 })();
 
-module.exports = function factory(options, indexModuleName, indexModuleFactory) {
+module.exports = function factory(options, indexModuleName, indexModuleFactory) 
+{
 
-    if (arguments.length === 1) {
+    if(arguments.length === 1) 
+    {
         indexModuleFactory = options;
         options = {};
-        indexModuleName = "";
-    } else if (arguments.length === 2) {
+        indexModuleName = '';
+    }
+    else if(arguments.length === 2) 
+    {
         indexModuleFactory = indexModuleName;
-        indexModuleName = "";
+        indexModuleName = '';
     }
 
-    if (!options.toNodeModule) {
+    if(!options.toNodeModule) 
+    {
         options.toNodeModule = true;
         const factoryArgs = [null, options, indexModuleName, indexModuleFactory];
         let _factory = factory.bind.apply(factory, factoryArgs);
-        function reroot(remain) {
+        function reroot(remain) 
+        {
             options.parentRemain = remain;
             return _factory.call();
-        };
-        reroot.name = "reroot";
+        }
+        reroot.name = 'reroot';
         return reroot;
     }
 
     // Remain Factory
     const mainRequire = require.bind(require.main);
 
-    class MainModulePathError extends Error {
-        constructor(message) {
+    class MainModulePathError extends Error 
+    {
+        constructor(message) 
+        {
             super(message);
-            this.name = "MainModulePathError";
+            this.name = 'MainModulePathError';
         }
     }
 
-    let _rootPath = "";
+    let _rootPath = '';
     let _indexRequire = null;
     let _parentRemain = null;
-    let _indexModuleName = "";
+    let _indexModuleName = '';
     let _indexModuleFactory = null;
     let _indexModule = null;
     let _remain_modules = {};
@@ -140,31 +167,40 @@ module.exports = function factory(options, indexModuleName, indexModuleFactory) 
      *          or "package/path/to/file"
      * @returns {any} The resolved file.
      */
-    function remain(modulePath) {
+    function remain(modulePath) 
+    {
         // Sanitize module paths.
-        if (remain.rootPath !== undefined) {
-            modulePath = remain.rootPath + modulePath;
-        }
-        if (modulePath.startsWith("/")) {
-            modulePath = "." + modulePath;
-        }
+        if(remain.rootPath !== undefined) 
 
-        if (!modulePath.startsWith(".")) {
-            if (remain.parentRemain) {
+            modulePath = remain.rootPath + modulePath;
+        
+        if(modulePath.startsWith('/')) 
+
+            modulePath = '.' + modulePath;
+        
+
+        if(!modulePath.startsWith('.')) 
+
+            if(remain.parentRemain) 
+            {
                 return remain.parentRemain(modulePath);
-            } else {
+            }
+            else
+            {
                 // TODO: Check if entry exists or else throw error
                 return _remain_modules[modulePath];
             }
-        }
+        
 
         /* Require the module
          * Check if the module is already rerooted.
          * If not call the reroot function and pass configured remain function. */
         const reroot = remain.require(modulePath);
 
-        if (isFunction(reroot) && reroot.name === "reroot") {
-            if (!reroot._rooted) {
+        if(isFunction(reroot) && reroot.name === 'reroot') 
+        {
+            if(!reroot._rooted) 
+            {
                 reroot._exports = reroot(remain);
                 reroot._rooted = true;
             }
@@ -175,56 +211,66 @@ module.exports = function factory(options, indexModuleName, indexModuleFactory) 
 
     Object.defineProperties(remain, {
         rootPath: {
-            get: function () {
+            get: function() 
+            {
                 return _rootPath;
             }
         },
         require: {
-            get: function () {
-                return (_indexRequire) ? _indexRequire : mainRequire;
+            get: function() 
+            {
+                return(_indexRequire) ? _indexRequire : mainRequire;
             }
         },
         indexModule: {
-            get: function () {
+            get: function() 
+            {
                 return _indexModule;
             }
         },
         parentRemain: {
-            get: function () {
+            get: function() 
+            {
                 return _parentRemain;
             }
         },
         indexName: {
-            get: function () {
+            get: function() 
+            {
                 return _indexName;
             }
         },
         register: {
-            value: function (name, indexModule) {
+            value: function(name, indexModule) 
+            {
                 // if (isString(indexModule)) indexModule = remain(indexModule);
-                if (name === "") return;
+                if(name === '') return;
                 
-                if (remain.parentRemain !== null) {
+                if(remain.parentRemain !== null) 
+
                     remain.parentRemain.register(name, indexModule);
-                } else { // TODO: RemainModule passed
+                
+                else
+                // TODO: RemainModule passed
                     _remain_modules[name] = indexModule;
-                }
+                
             }
         },
         name: {
-            get: function() {
-                return "remain";
+            get: function() 
+            {
+                return'remain';
             }
         }
     });
 
     // Set options
-    if (options.parentRemain) _parentRemain = options.parentRemain;
+    if(options.parentRemain) _parentRemain = options.parentRemain;
 
     _indexModuleName = indexModuleName;
     _indexModuleFactory = indexModuleFactory;
-    if (options.rootPath) _rootPath = options.rootPath;
-    if (options.indexRequire) _indexRequire = options.indexRequire;
+    if(options.rootPath) _rootPath = options.rootPath;
+    if(options.indexRequire) _indexRequire = options.indexRequire;
 
     _indexModule = indexModuleFactory(remain);
     remain.register(_indexModuleName, _indexModule);

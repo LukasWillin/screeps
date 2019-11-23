@@ -1,12 +1,16 @@
 
 /**
  * Error thrown when Method not implemented.
- * Like from an interface or abstract class.
- * @extends Error
+ *
+ * @param {Error} error - An error to extend.
  */
-class NotImplementedError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'NotImplementedError';
+class NotImplementedError
+{
+    constructor(error)
+    {
+        error.name = 'NotImplementedError';
+        return error;
     }
 }
+
+module.exports = NotImplementedError;

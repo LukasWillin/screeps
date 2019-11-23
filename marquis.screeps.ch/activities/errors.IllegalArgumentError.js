@@ -1,14 +1,15 @@
-
 /**
  * Thrown when a required argument is invalid from a function/constructor call.
  *
- * @extends {Error}
- *
- * @param {string} message - A message.
+ * @param {Error} error - An error to extend.
  */
-class IllegalArgumentError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'IllegalArgumentError';
+class IllegalArgumentError
+{
+    constructor(error) 
+    {
+        error.name = 'IllegalArgumentError';
+        return error;
     }
-};
+}
+
+module.exports = IllegalArgumentError;

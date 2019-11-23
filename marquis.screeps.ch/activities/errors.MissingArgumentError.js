@@ -2,13 +2,15 @@
 /**
  * Thrown when a required argument is missing from a function/constructor call.
  *
- * @extends {Error}
- *
- * @param {string} message - A message.
+ * @param {Error} error - An error to extend.
  */
-class MissingArgumentError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'MissingArgumentError';
+class MissingArgumentError
+{
+    constructor(error) 
+    {
+        error.name = 'MissingArgumentError';
+        return error;
     }
-};
+}
+
+module.exports = MissingArgumentError;

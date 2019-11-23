@@ -6,4 +6,4 @@ const activator = new Activator(new Scheduler());
 
 - All the information for the scheduler should be stored in the Activity
 - The activator must keep track of the used ressources
-- The activator must only run so many activities as necessary
+- The activator must only run as many activities as necessary

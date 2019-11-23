@@ -32,11 +32,11 @@ any changes.
 
 ___ActivitySystem_____________
 create() 		- Creates a new managed Activity
-execute() 	- Execute the activity with provided ID.
+execute() 	    - Execute the activity with provided ID.
 							An execution method must accept 2 Objects as arguments like so:
-								(argsByCopy, dataByRef)
+                            (argsByCopy, dataByRef)
 							and can return a roomID which (if provided) will replace the old roomID.
-complete() 	- Completing the activity with ID and makes it inaccessible.
+complete() 	    - Completing the activity with ID and makes it inaccessible.
 							The system handles the activity as successfully finished.
 abort()			- Aborts the activity with ID and makes it inaccessible.
 							An aborted activity means the activity did not finish successfully.
