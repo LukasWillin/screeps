@@ -1,124 +1,84 @@
 
-const IllegalArgumentError = require('./errors.IllegalArgumentError');
-const isUndefinedOrNull = require('./util/fun/isUndefinedOrNull');
-const memory = require('./util/memory');
-const _isObject = require('lodash/isObject');
-const _sortBy = require('lodash/sortBy');
-const _isNumber = require('lodash/isNumber');
+
+const IActivity = require('./activity.IActivity');
+const IScheduler = require('./kernel.scheduler.IScheduler');
 
 /**
  * @implements {IScheduler}
+ * @memberof module:kernel/scheduler
  */
-class Scheduler
-{
-    /**
-     * Called by kernel.
-     * @param {float} cpuBudget - A cpu budget.
-     * @param {Function} callFactory - Factory creating an activity aware call function.
-     */
-    init(cpuBudget, callFactory) 
-    {
-        this._mem = memory('%%%.schd');
-        
-        if (isUndefinedOrNull(this._mem.activityList))
-            this._mem.activityList = [];
+class SimpleScheduler {
 
-        Object.defineProperties(this, {
-            '_activityClassList': { value: [], writable: true }
+	static run(schedulingCycle) {
+        if (Game.time % this.memory.schedulingCycle === 0) {
+            this._schedule();
+        }
+        if (arguments.length > 0 && _.isInteger(schedulingCycle)) {
+            this.memory.schedulingCycle = schedulingCycle;
+        }
+        this._execute(this._calcCurrentCpuLimit());
+	}
+
+	static register(activity, priority) {
+        if (!_.isObject(activity) && !(activity instanceof IActivity)) {
+            throw new IllegalArgumentError('Given object must be instance of IActivity to be registered.');
+        }
+        this._activityList.splice(activity);
+
+	}
+
+    static calcCurrentCpuLimit() {
+        // Calculate a cpu limit based on the current state.
+        return 8;
+    }
+
+	static _schedule() {
+        _.sortBy(this._activityList, function(activity) {
+            return Math.log2(Game.time - activity.creationTimestamp)
+                + Math.sqrt(activity.progressPercent)
+                + Math.log2(Game.time - this._activityPerformanceIndicators[activity.ID].lastRunTick)
+                + activity.staticPriority
+                + (10 - (this._activityPerformanceIndicators[activity.ID].cpu));
         });
-        
-        this._tick(cpuBudget, callFactory);
-    }
+	}
 
-    register(activity)
-    {
-        if (!_isObject(activity) && !activity.name ) 
-            throw new IllegalArgumentError(Error('Given activity was not an Object and did not specify the name of an Activity class.'));
-        
-        this._activities.unshift(activity);
-    }
+	static _execute(cpuLimit) {
 
-    _schedule() 
-    {
-        // Iterate over IActivityEntity-List
-        _sortBy(this._activityList, function (a) 
-        {
-            // Higher number means higher (temporary) prio for next run
-            return ((a.stats.ticks / a.stats.cpuTime) // Calculate how much cpu the activity need per run (overall)
-                + (Game.time - a.stats.lastRun) * 1.5) // How many ticks back was the last run? * 1.5 bias
-                * (_isNumber(a.prio) ? a.prio : 1); // A user definable priority bias as multiplier default = 1.0
-        });
-    }
-
-    /**
-     * 
-     * @param {int} cpuBudget 
-     * @param {Function} callFactory - Creates an activity aware call function.
-     */
-    _tick(cpuBudget, callFactory)
-    {
-        cpuBudget += 0.5;
-        cpuBudget = cpuBudget > 2 ? cpuBudget : 2; // At least a budget of 2
-
-        // Schedule before execution.
-        this._schedule();
-
-        const tick = Game.time;
-
-        for (let i = 0; i < this._activityList.length; i++) 
-        {
+        for (let i = 0; i < this._activityList.length; i++) {
+            const cpuTotal = Game.cpu.getUsed();
             const activity = this._activityList[i];
-            const cpuSpend = Game.cpu.getUsed();
-            // Only run the activity if chances of overspending the cpu budget are low
-            if (cpuSpend + (activity.stats.cpu / activity.stats.ticks) < cpuBudget) 
-            {
-                // Get instruction set and execute it
-                const iActivityClass = this.activityClassList[activity.class_];
-
-                const callFn = callFactory(iActivityClass, activity)();
-                // Inside call factory
-                // const currentCall = activity.callStack[0]; // last call at index 0. IactivityExecutionState
-                // iActivityClass[currentCall.instr][currentCall.index](activity.scope, currentCall.scope, call, currentCall.err, ...currentCall.args);
-                // Call should:
-                // - Be able to call subsequent instrucitions
-                // make a call bak to previous instruction
-                // call another instruction from same activity class
-
-                // Update stats
-                activity.stats.cpu += Game.cpu.getUsed() - cpuSpend;
-                activity.stats.ticks++;
-                activity.stats.lastTick = tick;
+            const currActivityPerfIndicator = this._activityPerformanceIndicators[activity.ID]
+            if (cpuUsed + currActivityPerfIndicator.cpu < cpuLimit) {
+                const host = ObjectSystem.getObjectById(activity.hostId);
+                const cpuUsed = Game.cpu.getUsed() - cpuTotal;
             }
         }
+	}
+
+	static get _activityList() {
+        if(_.isUndefinedOrNull(this.memory.activityList))
+			this.memory.activityList = [];
+		return this.memory.activityList;
+	}
+
+    static get _activityPerformanceIndicators() {
+
     }
 
-    /**
-     * List of activity entities.
-     */
-    get _activityList() 
-    {
-        return this._mem.activityList;
+    static addActivityClass(activityClass) {
+        if (!_.isObject(activityClass)) {
+            throw new IllegalArgumentError('An activity class must be an object.');
+        }
+        if (!_.isString(activityClass.className)) {
+            throw new IllegalArgumentError('An activity class must specify a class name.');
+        }
+        if (_.isObject(this._activityList[activityClass.className])) {
+            throw new InternalStateError(`An activity class with class name ${activityClass.className} was already added and cannot be overridden.`);
+        }
+        this._activityClasses[activityClass.className] = activityClass;
     }
+};
+Scheduler.className = 'ActivityScheduler';
+Scheduler.memory = MemoryUtil.get(ActivityScheduler.className);
 
-    /**
-     * The activity classes are all the available classes required to execute an activity.
-     * The activity json object specifies the name of the class which will execute it.
-     * @param {Object} activityClasses - An object containing classes by class name.
-     * @example
-     *  const activity = {
-     *      'name': 'BuilderActivity'
-     *  }
-     */
-    set activityClassList(activityClasses) 
-    {
-        return this._activityClasses = activityClasses;
-    }
-
-    get activityClassList()
-    {
-        return this._activityClassList ? this._activityClassList : [];
-    }
-}
-Scheduler.class = 'Scheduler';
-
-module.exports = Scheduler;
+module.exports = SimpleScheduler;

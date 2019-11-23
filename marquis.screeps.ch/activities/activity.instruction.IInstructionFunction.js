@@ -3,7 +3,7 @@
  * Function within an Instruction.
  * 
  * An instruction function expects a certain signature
- *      (ths, scope, call, err, ...args)
+ *      (ths, activityScope, instructionScope, call, err, ...args)
  * 
  * An instruction function can return values by assigning property 'out' to the scope
  *  AND return a truthy value;

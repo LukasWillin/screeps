@@ -49,5 +49,5 @@ class IKernel
      * @param {IInstruction} instruction - Any instruction.
      * @param {...any} args (optional) - Caller arguments. 
      */
-    call(scope, instruction, ...args) {}
+    callFactory(scope, instruction, ...args) {}
 }
