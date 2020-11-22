@@ -1,5 +1,6 @@
 import utils from './utils/utils';
 import room from './activities/room';
+import creepFactory from './creep/CreepFactory';
 
 interface ICustomWorkerMemory extends Object
 {
@@ -12,14 +13,41 @@ interface ICustomWorkerMemory extends Object
 export default {
     runRoom: room,
 
+    runWorkerCreateCreep: function (memory: ICustomWorkerMemory)
+    {
+        if (!memory.spawnName)
+            memory.spawnName = Object.keys(Game.spawns)[0];
+
+        const spawn = Game.spawns[memory.spawnName];
+        if (spawn.spawning)
+            return 'runWorkerCreateCreep';
+
+        const newCreepName = creepFactory.generateName("worker", 1);
+
+        if (creepFactory.worker(spawn, 1, newCreepName) !== OK)
+            return 'runWorkerCreateCreep';
+
+        memory.creepName = newCreepName;
+
+        return 'runWorkerSourcing';
+    },
+
     createWorker: function (memory: ICustomWorkerMemory)
     {
+        const creep = Game.creeps[memory.creepName];
+
+        if (!creep)
+            return 'runWorkerCreateCreep';
+
         return 'runWorkerSourcing';
     },
 
     runWorkerSourcing: function (memory: ICustomWorkerMemory)
     {
         const creep = Game.creeps[memory.creepName];
+
+        if (!creep)
+            return 'runWorkerCreateCreep';
 
         if(!memory.sourcing && creep.store[RESOURCE_ENERGY] == 0)
         {
@@ -57,6 +85,9 @@ export default {
     {
         const creep = Game.creeps[memory.creepName];
 
+        if (!creep)
+            return 'runWorkerCreateCreep';
+
         const transferTarget = creep.room.find(FIND_STRUCTURES, { 
             filter: structure => (structure.structureType == STRUCTURE_EXTENSION ||
                         structure.structureType == STRUCTURE_SPAWN ||
@@ -85,6 +116,9 @@ export default {
     {
         const creep = Game.creeps[memory.creepName];
 
+        if (!creep)
+            return 'runWorkerCreateCreep';
+
         const upgradeCode = creep.upgradeController(creep.room.controller);
 
         if (upgradeCode === ERR_NOT_IN_RANGE)
@@ -109,27 +143,17 @@ export default {
         // Repair until no more energy
 
         return 'runWorkerSourcing';
+    },
+
+    runWorkerBuilding: function(memory: ICustomWorkerMemory)
+    {
+        // TODO find construction sites
+
+        // Build until no energy
+
+        return 'runWorkerSourcing';
     }
 
-    // /** @param {Creep} creep **/
-    // runHarvester: function(creep: Creep) {
-    //     if(creep.store.getFreeCapacity() > 0) {
-    //         utils.harvestEnergy(creep);
-    //     }
-    //     else {
-    //         const targets = creep.room.find(FIND_STRUCTURES, {
-    //             filter: (structure) => {
-    //                 return (structure.structureType == STRUCTURE_EXTENSION ||
-    //                     structure.structureType == STRUCTURE_SPAWN ||
-    //                     structure.structureType == STRUCTURE_TOWER) &&
-    //                     structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-    //             }
-    //         });
-    //         if(targets.length > 0) {
-    //             utils.transferEnergy(creep, targets[0])
-    //         }
-    //     }
-    // },
     // /** @param {Creep} creep **/
     // runBuilder: function(creep) {
 
@@ -173,30 +197,7 @@ export default {
     //         }
 	//     }
     // },
-    // // runUpgrader: function(id: Id<Creep>) {
-    // //     const creep = Game.getObjectById(id);
 
-    // //     if(creep.memory.upgrading && creep.store[RESOURCE_ENERGY] == 0) {
-    // //         creep.memory.upgrading = false;
-    // //         creep.say('🔄 harvest');
-    // //     }
-    // //     if(!creep.memory.upgrading && creep.store.getFreeCapacity() == 0) {
-    // //         creep.memory.upgrading = true;
-    // //         creep.say('⚡ upgrade');
-    // //     }
-
-    // //     if(creep.memory.upgrading) {
-    // //         if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-    // //             creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
-    // //         }
-    // //     }
-    // //     else {
-    // //         var sources = creep.room.find(FIND_SOURCES);
-    // //         if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-    // //             creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
-    // //         }
-    // //     }
-    // // },
     // runTower: function(tower: StructureTower, scope: any)
     // {
     //     var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {

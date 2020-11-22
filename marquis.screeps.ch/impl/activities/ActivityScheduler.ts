@@ -16,6 +16,9 @@ class ActivityScheduler
         if (!mem.initializedRooms)
             mem.initializedRooms = [];
 
+        if (!mem.suspendedActivities)
+            mem.suspendedActivities = [];
+
         for (let roomName in Game.rooms)
         {
             const room = Game.rooms[roomName];
@@ -31,6 +34,14 @@ class ActivityScheduler
                 this.push({ next: "runRoom", memory: { roomName: roomName } });
 
                 mem.initializedRooms.push(roomName);
+            }
+        }
+
+        for(var i in Memory.creeps)
+        {
+            if(!Game.creeps[i])
+            {
+                delete Memory.creeps[i];
             }
         }
 
@@ -59,9 +70,23 @@ class ActivityScheduler
             {
                 // console.log("Next state", state);
 
-                state.next = functions[state.next](state.memory); // can return flags like 'kill'
-        
-                if (state.next !== 'kill')
+                try
+                {
+                    var nextFunction = functions[state.next](state.memory); // can return flags like 'kill'
+                    state.next = nextFunction;
+                }
+                catch (e)
+                {
+                    console.error(e);
+                    if (!state.exceptions)
+                        state.exceptions = [];
+                    state.exceptions.push([`${(new Date()).toISOString()}: Activity ${state.next} encountered an exception:`, e.name, `${e.lineNumber}:${e.columnNumber}`, e.message, e.stack]);
+                    state.suspend = true;
+                }
+
+                if (state.suspend)
+                    mem.suspendedActivities.push(state);
+                else if (state.next !== 'kill')
                     this.push(state);
             }
         }

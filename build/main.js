@@ -107,6 +107,8 @@ class ActivityScheduler {
             mem.nextActivities = [];
         if (!mem.initializedRooms)
             mem.initializedRooms = [];
+        if (!mem.suspendedActivities)
+            mem.suspendedActivities = [];
         for (let roomName in Game.rooms) {
             const room = Game.rooms[roomName];
             // room.controller?.owner.username === 'MarquisBS';
@@ -115,6 +117,11 @@ class ActivityScheduler {
                 // console.log("Room:", room, ", Controller.Owner", room.controller?.owner);
                 this.push({ next: "runRoom", memory: { roomName: roomName } });
                 mem.initializedRooms.push(roomName);
+            }
+        }
+        for (var i in Memory.creeps) {
+            if (!Game.creeps[i]) {
+                delete Memory.creeps[i];
             }
         }
         this.schedule();
@@ -131,8 +138,20 @@ class ActivityScheduler {
             const state = mem.activities.pop();
             if (state) {
                 // console.log("Next state", state);
-                state.next = functions_1.default[state.next](state.memory); // can return flags like 'kill'
-                if (state.next !== 'kill')
+                try {
+                    var nextFunction = functions_1.default[state.next](state.memory); // can return flags like 'kill'
+                    state.next = nextFunction;
+                }
+                catch (e) {
+                    console.error(e);
+                    if (!state.exceptions)
+                        state.exceptions = [];
+                    state.exceptions.push([`${(new Date()).toISOString()}: Activity ${state.next} encountered an exception:`, e.name, `${e.lineNumber}:${e.columnNumber}`, e.message, e.stack]);
+                    state.suspend = true;
+                }
+                if (state.suspend)
+                    mem.suspendedActivities.push(state);
+                else if (state.next !== 'kill')
                     this.push(state);
             }
         }
@@ -176,6 +195,11 @@ const STAGES = [
         if (CreepFactory_1.default.worker(spawn, 1, newCreepName) !== OK)
             return 0;
         ActivityScheduler_1.default.push({ next: 'createWorker', memory: { creepName: newCreepName } });
+        return 1;
+    },
+    function (room, memory) {
+        // TODO: Draw roads between all buildings and resources and exits
+        // Then align buildings in a circle around spawn
         return 1;
     },
     function (room, memory) {
@@ -241,16 +265,31 @@ exports.default = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const room_1 = __webpack_require__(/*! ./activities/room */ "./marquis.screeps.ch/impl/activities/room.ts");
+const CreepFactory_1 = __webpack_require__(/*! ./creep/CreepFactory */ "./marquis.screeps.ch/impl/creep/CreepFactory.ts");
 exports.default = {
     runRoom: room_1.default,
-    createWorker: function (memory) {
+    runWorkerCreateCreep: function (memory) {
+        if (!memory.spawnName)
+            memory.spawnName = Object.keys(Game.spawns)[0];
+        const spawn = Game.spawns[memory.spawnName];
+        if (spawn.spawning)
+            return 'runWorkerCreateCreep';
+        const newCreepName = CreepFactory_1.default.generateName("worker", 1);
+        if (CreepFactory_1.default.worker(spawn, 1, newCreepName) !== OK)
+            return 'runWorkerCreateCreep';
+        memory.creepName = newCreepName;
         return 'runWorkerSourcing';
     },
-    runWorker: function (memory) {
+    createWorker: function (memory) {
+        const creep = Game.creeps[memory.creepName];
+        if (!creep)
+            return 'runWorkerCreateCreep';
         return 'runWorkerSourcing';
     },
     runWorkerSourcing: function (memory) {
         const creep = Game.creeps[memory.creepName];
+        if (!creep)
+            return 'runWorkerCreateCreep';
         if (!memory.sourcing && creep.store[RESOURCE_ENERGY] == 0) {
             memory.sourcing = true;
             creep.say('Get Energy');
@@ -273,6 +312,8 @@ exports.default = {
     },
     runWorkerTransferEnergy: function (memory) {
         const creep = Game.creeps[memory.creepName];
+        if (!creep)
+            return 'runWorkerCreateCreep';
         const transferTarget = creep.room.find(FIND_STRUCTURES, {
             filter: structure => (structure.structureType == STRUCTURE_EXTENSION ||
                 structure.structureType == STRUCTURE_SPAWN ||
@@ -291,6 +332,8 @@ exports.default = {
     },
     runWorkerUpgrading: function (memory) {
         const creep = Game.creeps[memory.creepName];
+        if (!creep)
+            return 'runWorkerCreateCreep';
         const upgradeCode = creep.upgradeController(creep.room.controller);
         if (upgradeCode === ERR_NOT_IN_RANGE) {
             creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffffff' } });
@@ -301,6 +344,69 @@ exports.default = {
         }
         return 'runWorkerSourcing';
     },
+    runWorkerRepairing: function (memory) {
+        // Find damaged buildings
+        // Repair until no more energy
+        return 'runWorkerSourcing';
+    },
+    runWorkerBuilding: function (memory) {
+        // TODO find construction sites
+        // Build until no energy
+        return 'runWorkerSourcing';
+    }
+    // /** @param {Creep} creep **/
+    // runBuilder: function(creep) {
+    //     if(creep.memory.building && creep.store[RESOURCE_ENERGY] == 0) {
+    //         creep.memory.building = false;
+    //         creep.say('🔄 harvest');
+    //     }
+    //     if(!creep.memory.building && creep.store.getFreeCapacity() == 0) {
+    //         creep.memory.building = true;
+    //         creep.say('🚧 build');
+    //     }
+    //     if(creep.memory.building) {
+    //         var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+    //         if(targets.length) {
+    //             if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+    //                 creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#F00'}});
+    //             }
+    //         }
+    //         else
+    //         {
+    //             var targets = creep.room.find(FIND_STRUCTURES, {
+    //                 filter: (structure) => {
+    //                     return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
+    //                         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+    //                 }
+    //             });
+    //             if(targets.length > 0) {
+    //                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+    //                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#F00'}});
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     else {
+    //         if (creep.withdraw())
+    //         var sources = creep.room.find(FIND_SOURCES);
+    //         if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+    //             creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#F00'}});
+    //         }
+    //     }
+    // },
+    // runTower: function(tower: StructureTower, scope: any)
+    // {
+    //     var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+    //         filter: (structure) => structure.hits < structure.hitsMax
+    //     });
+    //     if(closestDamagedStructure) {
+    //         tower.repair(closestDamagedStructure);
+    //     }
+    //     var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+    //     if(closestHostile) {
+    //         tower.attack(closestHostile);
+    //     }
+    // }
 };
 
 
@@ -319,7 +425,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ActivityScheduler_1 = __webpack_require__(/*! ./activities/ActivityScheduler */ "./marquis.screeps.ch/impl/activities/ActivityScheduler.ts");
 module.exports.loop = function () {
     ActivityScheduler_1.default.init();
-    // // for as long as we have cpu to spend
+    // for as long as we have cpu to spend
     ActivityScheduler_1.default.run();
 };
 
