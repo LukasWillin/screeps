@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es2015",
+        "watch": true,
+        "lib": ["DOM", "ES2015"],
+        "module": "commonjs"
+    },
+    "include": [ "./marquis.screeps.ch/impl/*.ts" ],
+    "exclude": [
+        "node_modules"
+    ]
+}

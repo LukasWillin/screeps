@@ -19,9 +19,9 @@ module.exports = function memory(...args)
  * @param {string} path - Path in Memory.
  * @param {*} [defaultValue] - Optional default value to set at path.
  */
-module.exports.get = function(path, defaultValue = {})
+module.exports.get = function (path, defaultValue = {})
 {
-    if(!_has(Memory, path))
+    if (!_has(Memory, path))
         _set(Memory, path, defaultValue);
 
     return _get(Memory, path);
@@ -34,7 +34,7 @@ module.exports.get = function(path, defaultValue = {})
  * @param {string} path - Path in Memory.
  * @param {*} [value] - Optional value to set at path replacing any current value.
  */
-module.exports.set = function(path, value = {})
+module.exports.set = function (path, value = {})
 {
     _set(Memory, path, value);
     return _get(Memory, path);
@@ -48,9 +48,9 @@ module.exports.set = function(path, value = {})
  * @param {string} toPath - The destination path in Memory.
  * @param {*} defaultValue - The defaultValue if the  current path does not exist in Memory.
  */
-module.exports.move = function(fromPath, toPath, defaultValue)
+module.exports.move = function (fromPath, toPath, defaultValue)
 {
-    if(_get(Memory, `__mem__.${fromPath}>${toPath}`) !== 1)
+    if (_get(Memory, `__mem__.${fromPath}>${toPath}`) !== 1)
     {
         _set(Memory, `__mem__.${fromPath}>${toPath}`, 1);
         const oldValue = _get(Memory, fromPath, defaultValue);

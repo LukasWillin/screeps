@@ -2,17 +2,23 @@ module.exports = {
     'env': {
         'browser': true,
         'commonjs': true,
-        'es6': true
+        'es6': true,
     },
     'extends': 'eslint:recommended',
     'globals': {
         'Atomics': 'readonly',
         'SharedArrayBuffer': 'readonly',
         'Game': 'readonly',
-        'Memory': 'readonly'
+        'Memory': 'readonly',
+        'FIND_SOURCES': 'readonly',
+        'ERR_NOT_IN_RANGE': 'readonly',
+        'RESOURCE_ENERGY': 'readonly',
+        'WORK': 'readonly',
+        'CARRY': 'readonly',
+        'MOVE': 'readonly'
     },
     'parserOptions': {
-        'ecmaVersion': 2018
+        'ecmaVersion': 6,
     },
     'rules': {
         "indent": [

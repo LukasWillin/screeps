@@ -1,8 +1,4 @@
+"use strict";
 /* eslint-disable no-unused-vars */
-
-/**
- * Array of IInstructionFunctions.
- * @name IInstruction
- * @interface
- */
-const IInstruction = [];
+exports.__esModule = true;
+;
