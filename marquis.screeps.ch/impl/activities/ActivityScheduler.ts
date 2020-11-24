@@ -1,12 +1,12 @@
 import functions from '../functions';
 import ICustomMemory from '../ICustomMemory';
 
-const mem = Memory as ICustomMemory;
-
 class ActivityScheduler
 {
     init()
     {
+        const mem = Memory as ICustomMemory;
+
         if (!mem.activities)
             mem.activities = [];
 
@@ -50,11 +50,15 @@ class ActivityScheduler
 
     push(state)
     {
+        const mem = Memory as ICustomMemory;
+
         mem.nextActivities.push(state);
     }
 
     schedule()
     {
+        const mem = Memory as ICustomMemory;
+
         mem.activities.unshift.apply(mem.activities, mem.nextActivities);
 
         mem.nextActivities = [];
@@ -62,6 +66,9 @@ class ActivityScheduler
 
     run()
     {
+        console.log(`---{ Tick ${Game.time} }--------------------`);
+        const mem = Memory as ICustomMemory;
+
         while (mem.activities.length > 0)
         {
             const state = mem.activities.pop();
@@ -69,6 +76,8 @@ class ActivityScheduler
             if (state)
             {
                 // console.log("Next state", state);
+
+                // console.log("Running activity: ", JSON.stringify(state));
 
                 try
                 {
