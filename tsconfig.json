@@ -5,7 +5,7 @@
         "lib": ["DOM", "ES2015"],
         "module": "commonjs"
     },
-    "include": [ "./marquis.screeps.ch/impl/*.ts" ],
+    "include": [ "./marquis.screeps.ch/*.ts" ],
     "exclude": [
         "node_modules"
     ]
